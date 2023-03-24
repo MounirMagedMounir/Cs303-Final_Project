@@ -2,7 +2,10 @@
 
 Download the files first 
 
+Enter the folder
 
+    .cd AwesomeProject
+    
 set up command
 
      .npm install 
