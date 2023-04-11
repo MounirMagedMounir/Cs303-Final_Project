@@ -125,157 +125,67 @@ export default function Signup({ navigation }) {
   }, [response]);
 
   return (
-    <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <ImageBackground
-          source={require("../assets/Image1.jpeg")}
-          style={styles.backgroundImage}
-          resizeMode="cover"
-        >
-          <View
-            style={{ marginTop: 110, marginLeft: "15%", marginRight: "20%" }}
-          >
-            <InputField
-              icon={
-                <Ionicons
-                  name="person-circle-outline"
-                  size={17}
-                  color="#666"
-                  style={{ marginTop: 20, marginLeft: -30 }}
-                />
-              }
-              label={"Full name"}
-              value={name}
-              onChangeText={SetName}
-            />
-            <InputField
-              icon={
-                <Ionicons
-                  name="mail-outline"
-                  size={17}
-                  color="#666"
-                  style={{ marginTop: 20, marginLeft: -30 }}
-                />
-              }
-              label={"Email"}
-              keyboardType="email-address"
-              value={email}
-              onChangeText={SetEmail}
-            />
-            <InputField
-              icon={
-                <Ionicons
-                  name="ios-lock-closed-outline"
-                  size={17}
-                  color="#666"
-                  style={{ marginTop: 20, marginLeft: -30 }}
-                />
-              }
-              label={"Password"}
-              inputType="password"
-              value={password}
-              onChangeText={SetPassword}
-              r={bool}
-            />
-            <Ionicons
-              name={Icon}
-              size={19}
-              color="#666"
-              style={{ marginTop: -65, marginBottom: 40, marginRight: 190 }}
-              onPress={ChangeIcon}
-            ></Ionicons>
-            <InputField
-              icon={
-                <Ionicons
-                  name="ios-lock-closed-outline"
-                  size={17}
-                  color="#666"
-                  style={{ marginTop: 20, marginLeft: -30 }}
-                />
-              }
-              label={"Confirm password"}
-              inputType="password"
-              value={confPassword}
-              onChangeText={SetconfPassword}
-              r={bool2}
-            />
-            <Ionicons
-              name={Icon2}
-              size={19}
-              color="#666"
-              style={{ marginTop: -65, marginBottom: 40, marginRight: 190 }}
-              onPress={ChangeIcon2}
-            ></Ionicons>
-
-            <InputField
-              icon={
-                <Ionicons
-                  name="call-outline"
-                  size={17}
-                  color="#666"
-                  style={{ marginTop: 20, marginLeft: -30 }}
-                />
-              }
-              label={"Phone"}
-              keyboardType="numeric"
-              onChangeText={SetPhone}
-            />
-            <Botton label={"Register"} onPress={handleSignUp} />
+    <SafeAreaView >
+    <ScrollView showsVerticalScrollIndicator={false}>
+    <ImageBackground source={require('../assets/pexels-photo-8450256.webp')} size="lg" alt='logo' w="full" resizeMode="cover" >
+    <View style={{marginTop:35,marginLeft:"20%",marginRight:"20%"}}>
+    <Text style={{textAlign:"center",fontSize:30,color:'#539165',fontWeight:"bold",marginBottom:20}}>Register</Text>
+    <InputField  label={'Full name'}  value={name} onChangeText={SetName} />
+    <Ionicons name="person-circle-outline"size={17} color="#539165" style={styles.icons} /> 
+    <InputField  label={'Email'}   keyboardType="email-address" value={email} onChangeText={SetEmail} />
+    <Ionicons name="mail-outline"size={17} color="#539165" style={styles.icons} />
+  
+    <InputField icon={<Ionicons name={Icon} size={19} color="#666" style={{marginTop:20,marginLeft:-30}} onPress={ChangeIcon}></Ionicons>} label={'Password'}  inputType="password" value={password} onChangeText={SetPassword} r={bool} />
+    <Ionicons name='ios-lock-closed-outline' size={17} color="#539165" style={styles.icons} /> 
+    {/* icon={<Ionicons name={Icon} size={19} color="#666" style={{marginTop:-90,marginBottom:100,marginLeft:190}} onPress={ChangeIcon}></Ionicons>
+    } */}
+    <InputField icon={<Ionicons name={Icon2} size={19} color="#666" style={{marginTop:20,marginLeft:-30}} onPress={ChangeIcon2}></Ionicons> } label={'Confirm password'}  inputType="password"  value={confPassword} onChangeText={SetconfPassword} r={bool2}/>
+    {/* <Ionicons name={Icon2} size={19} color="#666" style={{marginTop:-90,marginBottom:60,marginLeft:190}} onPress={ChangeIcon2}></Ionicons> */}
+    <Ionicons name='ios-lock-closed-outline' size={17} color="#539165" style={styles.icons} /> 
+    <InputField   label={'Phone'}  keyboardType='numeric'  onChangeText={SetPhone}   />
+    <Ionicons name='call-outline' size={17} color="#539165" style={styles.icons} />
+          <Botton label={"Register"} onPress={handleSignUp} />
+    </View>
+    <View style={{flexDirection:'row',marginLeft:45,marginTop:20}}>
+      <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='#539165' />
+          <TouchOpacity Src={Googlee} borderColorr='#539165' title={accessToken?"Get user Data":"Login" } style={{width:300}} onPress={accessToken?getUserData:()=>promptAsync({useProxy:true,showInRecents:true})}   />
+          <TouchOpacity  borderColorr='#539165' onPress={()=>{}} Src={Twitter} />
           </View>
-          <View style={{ flexDirection: "row", marginLeft: 45, marginTop: 20 }}>
-            <TouchOpacity onPress={() => {}} Src={Facebook} />
-            <TouchOpacity
-              Src={Googlee}
-              title={accessToken ? "Get user Data" : "Login"}
-              style={{ width: 300 }}
-              onPress={
-                accessToken
-                  ? getUserData
-                  : () => promptAsync({ useProxy: true, showInRecents: true })
-              }
-            />
-            <TouchOpacity onPress={() => {}} Src={Twitter} />
-          </View>
-          <View style={{ flexDirection: "row", marginTop: 20 }}>
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text
-                style={{
-                  color: "#FE3539",
-                  fontWeight: 700,
-                  marginLeft: 110,
-                  marginRight: 5,
-                }}
-              >
-                Login
-              </Text>
+          <View style={{flexDirection:'row',marginTop:20}}>
+                    <Text style={{fontSize:15,fontWeight:'bold',marginLeft:90,color:'#fff'}}>Already register?</Text>
+            <TouchableOpacity onPress={()=>navigation.navigate('login')}>
+            <Text style={{color:'#539165',fontWeight:700,marginLeft:10,marginRight:5,borderBottomColor: '#539165',borderBottomWidth: 2,marginBottom: 70}}>Login</Text>
             </TouchableOpacity>
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-              Already register?
-            </Text>
-          </View>
+            </View>  
         </ImageBackground>
-      </ScrollView>
+    </ScrollView>
     </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  backgroundImage: {
-    width: "100%",
-    height: 700,
-  },
-  profilePic: {
-    width: 50,
-    height: 50,
-  },
-  userInfo: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+  
+    );
+    };
+  
+      const styles=StyleSheet.create({
+        container: {
+          flex:1,
+        backgroundColor:"#fff",
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      // backgroundImage: {
+      //   width: "100%",
+      //   height:700,   
+      //  },
+      profilePic:{
+        width:50,
+        height:50
+      },
+      userInfo:{
+        alignItems: "center",
+        justifyContent: "center"
+      },
+      icons:{
+        marginTop:-90,marginLeft:-2,marginBottom:45
+      },
+    
+      
+    });

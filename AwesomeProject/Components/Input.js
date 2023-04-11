@@ -17,19 +17,14 @@ export default function InputField({
   fieldButtonFunction,
   value,
   onChangeText,
-  style,
+  style,variant
 }) {
-  // let bool=false;
-
-  // console.log("bool:"+bool);
   return (
     <>
+   
       <View
         style={{
           flexDirection: "row",
-          // borderBottomColor: '#ccc',
-          // borderBottomWidth: 1,
-          // paddingBottom: 2,
           marginBottom: 25,
         }}
       >
@@ -38,7 +33,7 @@ export default function InputField({
             {fieldButtonLabel}
           </Text>
         </TouchableOpacity>
-
+        
         {inputType == "password" ? (
           <TextInput
             placeholder={label}
@@ -47,6 +42,7 @@ export default function InputField({
             secureTextEntry={r}
             value={value}
             onChangeText={onChangeText}
+            // variant="rounded"
           />
         ) : (
           <TextInput
@@ -55,25 +51,27 @@ export default function InputField({
             style={styles.StyleInput}
             value={value}
             onChangeText={onChangeText}
-            required
+            // variant="rounded"
+            
           />
         )}
 
-        {icon}
+{icon}
       </View>
     </>
   );
 }
 const styles = StyleSheet.create({
   StyleInput: {
-    flex: 1,
-    width: "60%",
+    // flex: 1,
+    width: "120%",
     padding: 15,
     textAlign: "center",
-    marginBottom: 1,
+   marginLeft:-20,
+    marginBottom: 25,
     backgroundColor: "#fff",
     borderRadius: 50,
-    borderColor: "#FE3539",
+    borderColor: "#539165",
     borderWidth: 1,
   },
 });
