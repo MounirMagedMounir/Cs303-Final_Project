@@ -1,8 +1,8 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useState } from "react";
 
 //screens import 
 import Home from '../Screens/Home';
@@ -14,19 +14,29 @@ import More from '../Screens/More';
 const Tab = createBottomTabNavigator();
 
 const homeName = "Home";
-const loginName = "Login";
+const loginName = "Login/Register";
 const registerName = "Register";
 const aboutName = "About";
 const moreName = "More";
 
 const auth = getAuth();
 
+
+
 function NavBar() 
 {
+
+  const [State, setState] = useState(false);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setState(true);
+      const uid = user.uid;
+    } else {
+      setState(false);
+    }
+  });
     return (
-
-      
-
         <NavigationContainer>
             <Tab.Navigator
             initialRouteName={homeName}
@@ -66,8 +76,9 @@ function NavBar()
               >
 
             <Tab.Screen name={homeName} component={Home} />
-            <Tab.Screen name={loginName} component={Login} />
-            <Tab.Screen name={registerName} component={Register} />
+            {State == true ? ({}):(<Tab.Screen name={loginName} component={Login} />)}
+            
+            
             <Tab.Screen name={aboutName} component={About} />
             <Tab.Screen name={moreName} component={More} />
             </Tab.Navigator>
