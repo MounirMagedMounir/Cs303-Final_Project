@@ -17,14 +17,15 @@ import Facebook from "../assets/facebook.png";
 import Googlee from "../assets/google.png";
 import Twitter from "../assets/twitter.png";
 import TouchOpacity from "../Components/TouchOpacity";
+import {launchCamera,launchImageLibrary} from 'react-native-image-picker';
 import { auth, db } from "../firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc,setDoc  } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import * as Google from "expo-auth-session/providers/google";
 import { Alert } from "react-native";
 export default function Signup({ navigation }) {
-  const [accessToken, SetAccessToken] = useState();
+   const [accessToken, SetAccessToken] = useState();
   const [userInfo, SetUserInfo] = useState();
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
@@ -32,6 +33,9 @@ export default function Signup({ navigation }) {
   });
   const [name, SetName] = useState("");
   const [phone, SetPhone] = useState("");
+  const [day, SetDay] = useState("");
+  const [month, SetMonth] = useState("");
+  const [year, SetYear] = useState("");
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
   const [confPassword, SetconfPassword] = useState("");
@@ -58,6 +62,7 @@ export default function Signup({ navigation }) {
       Setbool2(true);
     }
   };
+ 
   const handleSignUp = async () => {
     if (name.trim().length < 2) {
       Alert.alert("please enter a name");
@@ -66,12 +71,16 @@ export default function Signup({ navigation }) {
         await createUserWithEmailAndPassword(auth, email, password)
           .then(async (userCredential) => {
             const user = userCredential.user;
-            const docRef = await addDoc(collection(db, "users"), {
+            await setDoc(doc(db, "users",auth.currentUser.uid), {
               email: email.toLowerCase().trim(),
               uid: user.uid,
               name: name.trim(),
               password: password.trim(),
               phone: phone.trim(),
+              Image:"https://res.cloudinary.com/zpune/image/upload/v1645429478/random/user_u3itjd.png",
+              day:day,
+             Month:month,
+             year:year,
             });
             Alert.alert("done");
             navigation.navigate("Login");
@@ -102,11 +111,15 @@ export default function Signup({ navigation }) {
     await createUserWithEmailAndPassword(auth, userInfo.email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
-        const docRef = await addDoc(collection(db, "users"), {
+         await setDoc(doc(db, "users",auth.currentUser.uid), {
           email: userInfo.email.toLowerCase().trim(),
           uid: user.uid,
           name: userInfo.name.trim(),
           password: password.trim(),
+         day:day,
+        Month:month,
+         year:year,
+          Card:[],
         });
         Alert.alert("done");
       })
@@ -144,8 +157,18 @@ export default function Signup({ navigation }) {
     <Ionicons name='ios-lock-closed-outline' size={17} color="#539165" style={styles.icons} /> 
     <InputField   label={'Phone'}  keyboardType='numeric'  onChangeText={SetPhone}   />
     <Ionicons name='call-outline' size={17} color="#539165" style={styles.icons} />
+   
+
+  <View style={{flexDirection:"row",justifyContent:"space-around",marginLeft:10}}>
+
+  <TextInput    placeholder={'dd'}  keyboardType='numeric'  onChangeText={SetDay}  style={styles.StyleInput} maxLength={2} />
+ 
+    <TextInput   placeholder={'mm'}  keyboardType='numeric'  onChangeText={SetMonth}  style={styles.StyleInput} maxLength={2}/>
+    <TextInput   placeholder={'yy'}  keyboardType='numeric'  onChangeText={SetYear}  style={styles.StyleInput} maxLength={4}/>
+  </View>
+  </View>
           <Botton label={"Register"} onPress={handleSignUp} />
-    </View>
+ 
     <View style={{flexDirection:'row',marginLeft:45,marginTop:20}}>
       <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='#539165' />
           <TouchOpacity Src={Googlee} borderColorr='#539165' title={accessToken?"Get user Data":"Login" } style={{width:300}} onPress={accessToken?getUserData:()=>promptAsync({useProxy:true,showInRecents:true})}   />
@@ -162,7 +185,7 @@ export default function Signup({ navigation }) {
     </SafeAreaView>
   
     );
-    };
+  };
   
       const styles=StyleSheet.create({
         container: {
@@ -186,6 +209,18 @@ export default function Signup({ navigation }) {
       icons:{
         marginTop:-90,marginLeft:-2,marginBottom:45
       },
-    
-      
+      StyleInput: {
+        // flex: 1,
+        width: "30%",
+        padding: 15,
+        textAlign: "center",
+       marginLeft:-20,
+        marginBottom: 25,
+        backgroundColor: "#fff",
+        borderRadius: 20,
+        borderColor: "#539165",
+        borderWidth: 1,
+        flexWrap:'wrap'
+      }
+
     });
