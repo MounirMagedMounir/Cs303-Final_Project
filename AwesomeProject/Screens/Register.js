@@ -78,9 +78,7 @@ export default function Signup({ navigation }) {
               password: password.trim(),
               phone: phone.trim(),
               Image:"https://res.cloudinary.com/zpune/image/upload/v1645429478/random/user_u3itjd.png",
-              day:day,
-             Month:month,
-             year:year,
+              BirthDate:day+"/"+month+"/"+year
             });
             Alert.alert("done");
             navigation.navigate("Login");
