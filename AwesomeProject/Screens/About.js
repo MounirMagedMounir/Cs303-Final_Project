@@ -1,38 +1,118 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View ,Button} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  ScrollView,
+} from "react-native";
+import { useState } from "react";
+import iabout from "../assets/iabout.png";
+import Footer from "../Components/Footer";
+import R3 from "../assets/R3.png";
 
-export default function About({navigation}) {
+export default function About({ navigation }) {
   return (
-    <View style={styles.container}>
-    
-      <Button
-        onPress={() => navigation.navigate("Home")}
-        title=" Home"
-        color="#2196F3"
-        accessibilityLabel="Home"
-      />
-      <Button
-        onPress={() => navigation.navigate("Login")}
-        title=" log in"
-        color="#2196F3"
-        accessibilityLabel="log in"
-      />
-      <Button
-        onPress={() => navigation.navigate("Register")}
-        title=" Register "
-        color="#38b000"
-        accessibilityLabel="Register"
-      />
-      
-    </View>
+    <>
+      <ImageBackground style={styles.imageBackground} source={R3}>
+        <View>
+          <View style={styles.container}>
+            <Text style={styles.headline}> About Us:</Text>
+            <Text style={styles.Abouttext}>
+              The owner is abdou. The global perfume market size was valued at
+              USD 50.85 billion in 2022 and is expected to register a compound
+              annual growth rate (CAGR) of 5.9% from 2023 to 2030. The market
+              growth is attributed to the growing trend of personal grooming,
+              coupled with increasing demand for luxury and exotic The owner is
+              abdou fragrances.Christian Dior was born in Granville, a seaside
+              town on the coast of Normandy, France.
+            </Text>
+
+            <View style={styles.container2}>
+              <Text style={styles.headline2}>Contact Us:</Text>
+              <Text style={styles.Abouttext2}>Telphone: 0114890000 .</Text>
+              <Text style={styles.Abouttext2}>Email: Abdo@gmail .</Text>
+              <Text style={styles.Abouttext2}> adress: El giza .</Text>
+            </View>
+          </View>
+          <Footer />
+        </View>
+
+        <StatusBar style="dark" />
+      </ImageBackground>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 7,
+    marginTop: 15,
+    opacity: 0.85,
+    marginHorizontal: 30,
+    backgroundColor: "#F6F1E9",
+    marginBottom: 50,
+  },
+  container2: {
     flex: 1,
-    backgroundColor: "#fff",
+    opacity: 0.87,
+    marginHorizontal: 20,
+    width: "85%",
+    height: "35%",
+    backgroundColor: "#F6F1E9",
+    marginTop: 30,
+    marginBottom: 10,
+  },
+
+  imageBackground: {
+    opacity: 1,
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  headline: {
+    marginHorizontal: 5,
+    textAlign: "center",
+    flex: 0.2,
+    height: "35%",
+
+    fontSize: 25,
+    borderWidth: 3,
+    borderColor: "#19376D",
+    borderBottomWidth: 15,
+    fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
+    color: "green",
+    // resizeMode: "center",
+  },
+  headline2: {
+    //marginHorizontal: 35,
+    borderWidth: 3,
+    borderColor: "#19376D",
+
+    borderBottomWidth: 12,
+    flex: 0.3,
+    fontSize: 23,
+    fontWeight: "bold",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "black",
+    color: "green",
+    textAlign: "center",
+  },
+  Abouttext: {
+    marginHorizontal: 10,
+    fontSize: 19,
+    fontWeight: "bold",
+  },
+  Abouttext2: {
+    marginHorizontal: 15,
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "darkred",
   },
 });
