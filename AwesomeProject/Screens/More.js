@@ -1,7 +1,8 @@
 import * as React from 'react';
-
+import { useState,useEffect} from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth ,db } from "../firebase";
 import {
     StyleSheet,
     Text,
@@ -14,15 +15,27 @@ import {
   import { useNavigation } from '@react-navigation/native';
   import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from '@react-navigation/native';
-const stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
 
 
 export default function More({navigation})
+
 {
 
+
+  
+  const [State, setState] = useState(false);
+
+  const listen=onAuthStateChanged(auth,(user)=>{
+    if(user){
+        setState(true);
+    }else{  
+        setState(false);
+    }
+});
 
   const logOut = () => {
     signOut(auth)
@@ -37,10 +50,16 @@ export default function More({navigation})
     <TouchableOpacity onPress={() => navigation.navigate("About")} >
     <Text style= {styles.button}>About</Text>
     </TouchableOpacity>
-
-    <TouchableOpacity onPress = {logOut} >
-    <Text style= {styles.button}>Logout</Text>
-    </TouchableOpacity>
+    {State == true ? (
+          <TouchableOpacity onPress = {logOut} >
+          <Text style= {styles.button}>Logout</Text>
+          </TouchableOpacity>
+        ) : (
+          <View>
+           
+          </View>
+        )}
+    
 
 
     </View>
