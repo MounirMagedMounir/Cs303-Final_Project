@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useState } from "react";
-import iabout from "../assets/iabout.png";
+
 import Footer from "../Components/Footer";
 import R3 from "../assets/R3.png";
 
