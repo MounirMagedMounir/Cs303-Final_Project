@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Alert } from 'react-native';
-import backgroundImage from '../assets/fbackground.jpg';
-import image from '../assets/home.png';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, ImageBackground,Alert } from 'react-native';
+import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sendPasswordResetEmail } from 'firebase/auth';
-
+import b from '../assets/249.jpg'
 
 export default function Login({ navigation }) {
   const [Email, setEmail] = useState('');
@@ -13,7 +11,8 @@ export default function Login({ navigation }) {
   const[Icon,SetIcon]=useState('eye-off-outline');
   const[bool,Setbool]=useState(true);
 
-  const auth = getAuth()
+  const auth = getAuth();
+  const googleProvider = new GoogleAuthProvider();
   
   const ChangeIcon=()=>{
     if (Icon==='eye-off-outline') {
@@ -26,6 +25,7 @@ export default function Login({ navigation }) {
     
   }
   }
+
 
   const handleResetPassword = () => {
     if (Email) {
@@ -60,40 +60,41 @@ export default function Login({ navigation }) {
 
   return (
     <ImageBackground
-      source={backgroundImage}
+      source={b}
       style={styles.backgroundImage}
     >
-      <KeyboardAvoidingView behavior="hight" style={styles.container}>
-      
-        <View style={styles.hcontainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-            <Image
-              source={image}
-              style={{ width: 50, height: 50, marginBottom: 155 }}
-            />
-          </TouchableOpacity>
-        </View>
+
         <View style={styles.inputsContainer}>
+
+        <Text style={{fontSize:40,marginTop:80,fontWeight:'bold'}}>Hello Again!</Text>
+        <Text style={{fontSize:30,marginTop:0}}>Wellcome back you've</Text>
+        <Text style={{fontSize:30,marginBottom:80}}>been missed!</Text>
+
           <TextInput
             style={styles.input}
-            placeholder="                      Email"
+            placeholder="Email"
             value={Email}
             onChangeText={setEmail}
             keyboardType="email-address"
           />
-          <TextInput
+         <TextInput
             style={styles.input}
-            placeholder="                    Password"
-            secureTextEntry={bool}
+            placeholder="Password"
             value={password}
             onChangeText={setPassword}
+            secureTextEntry={bool}
+            
           />
           <View>
-          <Ionicons name="ios-lock-closed-outline" size={17} color="#666" style={{ marginTop: -55, marginLeft: -100 }} />
-          <Ionicons name="mail-outline" size={17} color="#666" style={{ marginTop: -92, marginLeft: -100 }} />
+          <Ionicons name="ios-lock-closed-outline" size={17} color="#666" style={{ marginTop: -59, marginLeft: -130 }} />
+          <Ionicons name="mail-outline" size={17} color="#666" style={{ marginTop: -99, marginLeft: -130 }} />
           </View>
-          <Ionicons name={Icon} size={19} color="#666" style={{marginTop:-55,marginBottom:40,marginRight:-180}} onPress={ChangeIcon}></Ionicons>
+          <Ionicons name={Icon} size={19} color="#666" style={{marginTop:-57,marginBottom:40,marginRight:-260}} onPress={ChangeIcon}></Ionicons>
           
+          <TouchableOpacity onPress={handleResetPassword}>
+            <Text style={styles.link1}>Forget Password?</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity style={styles.buttonn} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
@@ -103,11 +104,10 @@ export default function Login({ navigation }) {
             <Text style={styles.link0}>Register</Text>
           </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={handleResetPassword}>
-            <Text style={styles.link1}>Forget Password?</Text>
-          </TouchableOpacity>
+          
+
         </View>
-      </KeyboardAvoidingView>
+
     </ImageBackground>
   );
 }
@@ -136,13 +136,14 @@ const styles = StyleSheet.create({
     marginBottom:-20,
   },
   input: {
-    width: '60%',
-    padding: 15,
+    width: '80%',
+    padding: 19,
     marginBottom: 15,
     backgroundColor: '#fff',
     borderRadius: 50,
-    borderColor: '#FE3539',
+    borderColor: 'red',
     borderWidth: 1,
+    textAlign:'center',
   },
   button: {
     backgroundColor: 'transparent',
@@ -158,7 +159,9 @@ const styles = StyleSheet.create({
   },
   link1: {
     fontWeight:700,
-    marginTop:10,
+    marginBottom:33,
+    marginRight:-160,
+    marginLeft:50,
   },
   link0: {
     textDecorationLine: 'underline',
@@ -166,9 +169,9 @@ const styles = StyleSheet.create({
     marginLeft:10,
   },
   buttonn: {
-    width: '60%',
-    backgroundColor: '#FE3539',
-    padding: 10,
+    width: '80%',
+    backgroundColor: 'red',
+    padding: 16,
     borderRadius: 50,
     marginTop:-11,
     marginLeft: 0,
@@ -180,6 +183,6 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: 'stretch',
-    backgroundColor: '#fff',
+    backgroundColor: 'red',
   },
 });
