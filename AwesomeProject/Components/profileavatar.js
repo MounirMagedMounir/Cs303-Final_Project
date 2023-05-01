@@ -3,6 +3,7 @@ import { Alert, Image, StyleSheet, TouchableOpacity, View, Text } from 'react-na
 import * as ImagePicker from 'expo-image-picker';
 import { collection, doc, getDocs, updateDoc, where,query } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import no from '../assets/no.png'
 
 
 const ProfileAvatar = () => {
@@ -55,7 +56,7 @@ const ProfileAvatar = () => {
         try {
             const userDocRef = doc(db, "users", userData.uid);
             await updateDoc(userDocRef, {
-                Image: profileImage,
+                image: profileImage,
             });
             Alert.alert("Success", "Your data has been updated!");
         } catch (error) {
@@ -70,7 +71,7 @@ const ProfileAvatar = () => {
                 {profileImage ? (
                     <Image source={{ uri: profileImage }} style={styles.avatar} />
                 ) : (
-                    <Image source={{ uri: profileImage }} style={styles.avatar} />
+                    <Image source={no} style={styles.avatar} />
                 )}
             </View>
         </TouchableOpacity>
