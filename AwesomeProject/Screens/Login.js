@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, ImageBackground,Alert } from 'react-native';
-import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import b from '../assets/249.jpg'
@@ -8,28 +8,28 @@ import b from '../assets/249.jpg'
 export default function Login({ navigation }) {
   const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const[Icon,SetIcon]=useState('eye-off-outline');
-  const[bool,Setbool]=useState(true);
+  const [Icon, SetIcon] = useState('eye-off-outline');
+  const [bool, Setbool] = useState(true);
 
   const auth = getAuth();
-  const googleProvider = new GoogleAuthProvider();
-  
-  const ChangeIcon=()=>{
-    if (Icon==='eye-off-outline') {
+
+
+  const ChangeIcon = () => {
+    if (Icon === 'eye-off-outline') {
       SetIcon('eye-outline')
       Setbool(false)
     }
-   else  {
-    SetIcon('eye-off-outline')
-    Setbool(true)
-    
-  }
+    else {
+      SetIcon('eye-off-outline')
+      Setbool(true)
+
+    }
   }
 
 
   const handleResetPassword = () => {
     if (Email) {
-      sendPasswordResetEmail(auth,Email)
+      sendPasswordResetEmail(auth, Email)
         .then(() => {
           Alert.alert("Password reset email sent.");
         })
@@ -64,49 +64,49 @@ export default function Login({ navigation }) {
       style={styles.backgroundImage}
     >
 
-        <View style={styles.inputsContainer}>
+      <View style={styles.inputsContainer}>
 
-        <Text style={{fontSize:40,marginTop:80,fontWeight:'bold'}}>Hello Again!</Text>
-        <Text style={{fontSize:30,marginTop:0}}>Wellcome back you've</Text>
-        <Text style={{fontSize:30,marginBottom:80}}>been missed!</Text>
+        <Text style={{ fontSize: 40, marginTop: 80, fontWeight: 'bold' }}>Hello Again!</Text>
+        <Text style={{ fontSize: 30, marginTop: 0 }}>Wellcome back you've</Text>
+        <Text style={{ fontSize: 30, marginBottom: 80 }}>been missed!</Text>
 
-          <TextInput
-            style={styles.input}
-            placeholder="Email"
-            value={Email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-          />
-         <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={bool}
-            
-          />
-          <View>
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          value={Email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={bool}
+
+        />
+        <View>
           <Ionicons name="ios-lock-closed-outline" size={17} color="#666" style={{ marginTop: -59, marginLeft: -130 }} />
           <Ionicons name="mail-outline" size={17} color="#666" style={{ marginTop: -99, marginLeft: -130 }} />
-          </View>
-          <Ionicons name={Icon} size={19} color="#666" style={{marginTop:-57,marginBottom:40,marginRight:-260}} onPress={ChangeIcon}></Ionicons>
-          
-          <TouchableOpacity onPress={handleResetPassword}>
-            <Text style={styles.link1}>Forget Password?</Text>
-          </TouchableOpacity>
+        </View>
+        <Ionicons name={Icon} size={19} color="#666" style={{ marginTop: -57, marginBottom: 40, marginRight: -260 }} onPress={ChangeIcon}></Ionicons>
 
-          <TouchableOpacity style={styles.buttonn} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-          <View style={{flexDirection:"row"}}>
+        <TouchableOpacity onPress={handleResetPassword}>
+          <Text style={styles.link1}>Forget Password?</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonn} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <View style={{ flexDirection: "row" }}>
           <Text style={styles.link}>You Don't Have An Account?</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
             <Text style={styles.link0}>Register</Text>
           </TouchableOpacity>
-          </View>
-          
-
         </View>
+
+
+      </View>
 
     </ImageBackground>
   );
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop:-20,
-    marginBottom:-20,
+    marginTop: -20,
+    marginBottom: -20,
   },
   input: {
     width: '80%',
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderColor: 'red',
     borderWidth: 1,
-    textAlign:'center',
+    textAlign: 'center',
   },
   button: {
     backgroundColor: 'transparent',
@@ -155,25 +155,25 @@ const styles = StyleSheet.create({
 
   },
   link: {
-    fontWeight:700,
+    fontWeight: 700,
   },
   link1: {
-    fontWeight:700,
-    marginBottom:33,
-    marginRight:-160,
-    marginLeft:50,
+    fontWeight: 700,
+    marginBottom: 33,
+    marginRight: -160,
+    marginLeft: 50,
   },
   link0: {
     textDecorationLine: 'underline',
-    fontWeight:700,
-    marginLeft:10,
+    fontWeight: 700,
+    marginLeft: 10,
   },
   buttonn: {
     width: '80%',
     backgroundColor: 'red',
     padding: 16,
     borderRadius: 50,
-    marginTop:-11,
+    marginTop: -11,
     marginLeft: 0,
   },
   buttonText: {
