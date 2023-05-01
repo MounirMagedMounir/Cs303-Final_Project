@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { deleteUser } from "firebase/auth";
 import ProfileAvatar from '../Components/profileavatar';
 import back from "../assets/Profile.png"
+import wp from "../assets/wp.png"
 
 export default function Home({ navigation }) {
     const [UserData, SetUserData] = useState(null);
@@ -107,82 +108,83 @@ export default function Home({ navigation }) {
 
     return (
         <>
-
             <ImageBackground
                 style={{ flex: 1 }}
-                source={back}>
+                source={wp}>
                 <ScrollView>
                     <KeyboardAvoidingView behavior="position">
-
-                        <View style={{ width: '30%', height: '15%', marginLeft: 143, marginTop: 79 }}>
-
-                            <ProfileAvatar />
-                        </View>
-                        <View>
-                            <Text style={{ fontSize: 20, marginLeft: 154, marginTop: 10 }}>{name}</Text>
-                            <Switch
-                                style={{
-                                    transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }],
-                                    marginTop: 1,
-                                    marginRight: 185,
-                                    marginBottom: 100,
-                                    marginLeft: 5,
-                                }}
-                                trackColor={{ false: "#767577", true: "#fff" }}
-                                thumbColor={isEnabled ? "#3EC70B" : "#f4f3f4"}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitch}
-                                value={isEnabled}
-                            />
-
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Name"
-                                value={name}
-                                onChangeText={(text) => setName(text)}
-                                keyboardType="text"
-                                editable={isEnabled}
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Email"
-                                value={UserData?.email}
-                                keyboardType="email-address"
-                                editable={false}
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Phone Number"
-                                value={phone}
-                                onChangeText={(text) => setPhone(text)}
-                                keyboardType="numeric"
-                                editable={isEnabled}
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Birth Date "
-                                value={BirthDate}
-                                onChangeText={(text) => setBirthdate(text)}
-                                keyboardType="numeric"
-                                editable={isEnabled}
-                            />
-
-                            {isEnabled ? (
-                                <TouchableOpacity style={styles.buttonn} onPress={updateData}>
-                                    <Text style={styles.buttonText}>SaveData</Text>
-                                </TouchableOpacity>
-
-                            ) : <TouchableOpacity style={styles.buttonn} onPress={handleDeleteAccount}>
-                                <Text style={styles.buttonText}>DeleteAccount</Text>
-                            </TouchableOpacity>}
-
-                        </View>
+                        <ImageBackground
+                            style={{ flex: 1 }}
+                            source={back}>
 
 
+                            <View style={{ width: '30%', height: '15%', marginLeft: '36.5%', marginTop: '10%' }}>
+
+                                <ProfileAvatar />
+                            </View>
+                            <View>
+                                <Text style={{ fontSize: 20, marginLeft: 154, marginTop: 10 }}>{name}</Text>
+                                <Switch
+                                    style={{
+                                        transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }],
+                                        marginTop: 1,
+                                        marginRight: 185,
+                                        marginBottom: 100,
+                                        marginLeft: 5,
+                                    }}
+                                    trackColor={{ false: "#767577", true: "#fff" }}
+                                    thumbColor={isEnabled ? "#3EC70B" : "#f4f3f4"}
+                                    ios_backgroundColor="#3e3e3e"
+                                    onValueChange={toggleSwitch}
+                                    value={isEnabled}
+                                />
+
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Name"
+                                    value={name}
+                                    onChangeText={(text) => setName(text)}
+                                    keyboardType="text"
+                                    editable={isEnabled}
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Email"
+                                    value={UserData?.email}
+                                    keyboardType="email-address"
+                                    editable={false}
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Phone Number"
+                                    value={phone}
+                                    onChangeText={(text) => setPhone(text)}
+                                    keyboardType="numeric"
+                                    editable={isEnabled}
+                                />
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Birth Date "
+                                    value={BirthDate}
+                                    onChangeText={(text) => setBirthdate(text)}
+                                    keyboardType="numeric"
+                                    editable={isEnabled}
+                                />
+
+                                {isEnabled ? (
+                                    <TouchableOpacity style={styles.buttonn} onPress={updateData}>
+                                        <Text style={styles.buttonText}>SaveData</Text>
+                                    </TouchableOpacity>
+
+                                ) : <TouchableOpacity style={styles.buttonn} onPress={handleDeleteAccount}>
+                                    <Text style={styles.buttonText}>DeleteAccount</Text>
+                                </TouchableOpacity>}
+
+                            </View>
+                        </ImageBackground>
                     </KeyboardAvoidingView>
                 </ScrollView>
             </ImageBackground>
-
         </>
     );
 }
@@ -196,23 +198,23 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '60%',
-        padding: 15,
-        marginBottom: 15,
+        padding: '3.8%',
+        marginBottom: '3.85%',
         textAlign: 'center',
         backgroundColor: '#fff',
         borderRadius: 50,
         borderColor: '#000',
         borderWidth: 1,
-        marginLeft: 70,
-        marginTop: -5,
+        marginLeft: '18%',
+        marginTop: '-1.3%',
     },
     buttonn: {
         width: '60%',
-        backgroundColor: '#FE3539',
-        padding: 10,
+        backgroundColor: 'red',
+        padding: '2.49%',
         borderRadius: 50,
         marginTop: 0,
-        marginLeft: 70,
+        marginLeft: '18%',
     },
     buttonText: {
         color: '#fff',
