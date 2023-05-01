@@ -26,7 +26,7 @@ const Imgurl = [
   "https://images.pexels.com/photos/133472/pexels-photo-133472.jpeg?auto=compress&cs=tinysrgb&w=1600",
   "https://images.pexels.com/photos/39574/flower-exotic-colorful-pink-39574.jpeg?auto=compress&cs=tinysrgb&w=1600",
   "https://images.pexels.com/photos/668465/pexels-photo-668465.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  "https://images.pexels.com/photos/697259/pexels-photo-697259.jpeg?auto=compress&cs=tinysrgb&w=1600",
+
   "https://images.pexels.com/photos/639086/pexels-photo-639086.jpeg?auto=compress&cs=tinysrgb&w=1600",
 ];
 
@@ -94,17 +94,32 @@ export default function Home({ navigation }) {
           {State == true ? (
             <View>
               <Text
-                style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20 }}
+                style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20,marginLeft: 10, }}
               >
-                Hello {UserData?.name}
+                    Hello {UserData?.name}
               </Text>
             </View>
           ) : (
-            <View></View>
+            <View>
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  marginBottom: 20,
+                  marginLeft: 15,
+                  marginTop: 10,
+                  color: "#e80405",
+                }}
+              >
+                Hello to shop
+              </Text>
+            </View>
           )}
         </View>
+
         <SafeAreaView>
           <View style={styles.scrollContainer}>
+            
             <ScrollView
               horizontal={true}
               pagingEnabled
@@ -117,12 +132,14 @@ export default function Home({ navigation }) {
                     },
                   },
                 },
-              ])}
+              ],null)}
               scrollEventThrottle={1}
             >
+            
               {Imgurl.map((image, imageIndex) => {
                 return (
-                  <View>
+                  <View>         
+                   
                     <TouchableOpacity
                       key={imageIndex}
                       onPress={() => navigation.navigate("Login")}
@@ -130,11 +147,14 @@ export default function Home({ navigation }) {
                       <View
                         style={{ width: windowWidth, height: 250 }}
                         key={imageIndex}
-                      >
+                      >   
+           
                         <ImageBackground
                           source={{ uri: image }}
                           style={styles.HeaderCard}
-                        ></ImageBackground>
+                        >
+                          
+                        </ImageBackground>
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -164,10 +184,69 @@ export default function Home({ navigation }) {
         </SafeAreaView>
 
         <View>
-          <SlideShow Imgurl={Imgurl} CatName="men" />
-          <SlideShow Imgurl={Imgurl} CatName="women" />
-          <SlideShow Imgurl={Imgurl} CatName="east" />
-          <SlideShow Imgurl={Imgurl} CatName="west" />
+          <SafeAreaView>
+            <View style={{ marginTop: 40, marginBottom: 40 }}>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.scrollHead}>Categories</Text>
+                <TouchableOpacity
+                  style={{
+                    marginLeft: 200,
+                    backgroundColor: "#e80405",
+                    borderRadius: 10,
+                    height: 23,
+                  }}
+                >
+                  <Text style={styles.scrollHeadsee}> More </Text>
+                </TouchableOpacity>
+              </View>
+              <ScrollView
+                horizontal={true}
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                scrollEventThrottle={1}
+              >
+                {Imgurl.map((image, imageIndex) => {
+                  return (
+                    <View>
+                      <TouchableOpacity
+                        key={imageIndex}
+                        onPress={() => navigation.navigate("Login")}
+                        style={{
+                          backgroundColor: "#FFF",
+                        }}
+                      >
+                        <View
+                          style={{ width: windowWidth - 260, height: 120 }}
+                          key={imageIndex}
+                        >
+                          <ImageBackground
+                            source={{ uri: image }}
+                            style={styles.catCard}
+                          >
+                            <Text
+                              style={{
+                                color: "#e80405",
+                                fontSize: 24,
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {imageIndex}
+                            </Text>
+                          </ImageBackground>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  );
+                })}
+              </ScrollView>
+            </View>
+          </SafeAreaView>
+        </View>
+        <View>
+          <SlideShow Imgurl={Imgurl} CatName="Men" />
+          <SlideShow Imgurl={Imgurl} CatName="Women" />
+          <SlideShow Imgurl={Imgurl} CatName="East" />
+          <SlideShow Imgurl={Imgurl} CatName="West" />
         </View>
       </ScrollView>
     </View>
@@ -206,6 +285,17 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
+    
+  },
+  catCard: {
+    flex: 1,
+    marginVertical: 1,
+    marginHorizontal: 1,
+    borderRadius: 5,
+    overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity:0.5,
   },
   card: {
     flex: 1,
@@ -221,7 +311,7 @@ const styles = StyleSheet.create({
     height: 8,
     width: 8,
     borderRadius: 4,
-    backgroundColor: "#539165",
+    backgroundColor: "#e80405",
     marginHorizontal: 4,
   },
   indicatorContainer: {
@@ -230,9 +320,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  scrollHead: {
-    color: "blue",
-    fontSize: 20,
+  scrollHeadsee: {
+    color: "white",
+    fontSize: 15,
     fontWeight: "bold",
+    textAlign: "center",
+  },
+  scrollHead: {
+    color: "#000",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginLeft: 20,
+    letterSpacing: 1,
   },
 });
