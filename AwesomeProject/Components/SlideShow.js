@@ -9,19 +9,30 @@ import {
   useWindowDimensions,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from "react-native";
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 export default function SlideShow({ Imgurl, CatName }) {
   const { width: windowWidth } = useWindowDimensions();
-  const navigation=useNavigation();
+  const navigation = useNavigation();
   return (
-    <View>
+    <View >
       <ScrollView>
         <SafeAreaView>
           <View style={styles.scrollContainer1}>
-            <TouchableOpacity style={{ marginRight: -340 }}>
+            <View style={{ flexDirection: "row", marginTop: 40 }}>
               <Text style={styles.scrollHead}>{CatName}</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  marginLeft: 250,
+                  backgroundColor: "#e80405",
+                  borderRadius: 10,
+                  height: 23,
+                }}
+              >
+                <Text style={styles.scrollHeadsee}> More </Text>
+              </TouchableOpacity>
+            </View>
             <ScrollView
               horizontal={true}
               pagingEnabled
@@ -34,17 +45,45 @@ export default function SlideShow({ Imgurl, CatName }) {
                     <TouchableOpacity
                       key={imageIndex}
                       onPress={() => navigation.navigate("Login")}
+                      style={{
+                        height: 230,
+                        elevation: 2,
+                        backgroundColor: "#FFF",
+                        marginLeft: 20,
+                        marginTop: 10,
+                        borderRadius: 15,
+                        marginBottom: 10,
+                        width: 160,
+                      }}
                     >
                       <View
-                        style={{ width: windowWidth - 300, height: 250 }}
+                        style={{ width: windowWidth - 243, height: 200 }}
                         key={imageIndex}
                       >
-                        <ImageBackground
-                          source={{ uri: image }}
-                          style={styles.card}
+                        <Image source={{ uri: image }} style={styles.card} />
+
+                        <View
+                          style={{
+                            paddingHorizontal: 10,
+                          }}
                         >
-                          <Text>{CatName}</Text>
-                        </ImageBackground>
+                          <Text
+                            style={{
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {CatName}kmimimjkgbhnjuijolooooo
+                          </Text>
+                          <Text
+                            style={{
+                              fontWeight: "bold",
+                              color: "#e80405",
+                              paddingTop: 10,
+                            }}
+                          >
+                            $1000
+                          </Text>
+                        </View>
                       </View>
                     </TouchableOpacity>
                   </View>
@@ -64,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scrollContainer1: {
-    height: 250,
+    height: 330,
     width: 400,
     marginBottom: 10,
     alignItems: "center",
@@ -82,7 +121,9 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
-    marginVertical: 60,
+    marginVertical: 10,
+    marginLeft: 2,
+    marginTop: 1,
     marginHorizontal: 10,
     borderRadius: 5,
     overflow: "hidden",
@@ -103,9 +144,17 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  scrollHead: {
-    color: "blue",
-    fontSize: 20,
+  scrollHeadsee: {
+    color: "white",
+    fontSize: 15,
     fontWeight: "bold",
+    textAlign: "center",
+  },
+  scrollHead: {
+    color: "#000",
+    fontSize: 24,
+    fontWeight: "bold",
+    marginLeft: 20,
+    letterSpacing: 1,
   },
 });
