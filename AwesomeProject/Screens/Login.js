@@ -9,6 +9,7 @@ import Facebook from "../assets/facebook.png";
 import Googlee from "../assets/google.png";
 import Twitter from "../assets/twitter.png";
 import { ScrollView } from 'native-base';
+import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 
 export default function Login({ navigation }) {
   const [Email, setEmail] = useState('');
@@ -17,6 +18,8 @@ export default function Login({ navigation }) {
   const [bool, Setbool] = useState(true);
 
   const auth = getAuth();
+  var provider = new GoogleAuthProvider();
+
 
 
   const ChangeIcon = () => {
