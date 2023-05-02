@@ -32,7 +32,7 @@ export default function Signup({ navigation }) {
   const [accessToken, SetAccessToken] = useState();
   const [userInfo, SetUserInfo] = useState();
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId:
+    webClientId:
       "248629810532-gae2c1d016o919dhta3kdgtojt9cegoq.apps.googleusercontent.com",
   });
   const [name, SetName] = useState("");
