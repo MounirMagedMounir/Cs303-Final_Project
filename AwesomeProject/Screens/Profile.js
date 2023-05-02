@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, Switch, ImageBackground, KeyboardAvoidingView, ScrollView,SafeAreaView,RefreshControl, } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Switch, ImageBackground, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
-import  React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { auth, db } from '../firebase'
 import { Alert } from 'react-native';
 import { onAuthStateChanged } from "firebase/auth";
@@ -8,6 +8,10 @@ import { deleteUser } from "firebase/auth";
 import ProfileAvatar from '../Components/profileavatar';
 import back from "../assets/Profile.png"
 import wp from "../assets/wp.png"
+import { Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+
 
 export default function Home({ navigation }) {
     const [UserData, SetUserData] = useState(null);
@@ -15,20 +19,11 @@ export default function Home({ navigation }) {
     const [name, setName] = useState(UserData?.name);
     const [phone, setPhone] = useState(UserData?.phone);
     const [BirthDate, setBirthdate] = useState(UserData?.birthdate);
-
+    const [date, setDate] = useState(new Date());
+    const [show, setShow] = useState(false);
 
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
     const userr = auth.currentUser;
-
-    const [refreshing, setRefreshing] = React.useState(false);
-
-    const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      setTimeout(() => {
-        setRefreshing(false);
-      }, 2000);
-    }, []);
-  
 
     useEffect(() => {
         getUserData();
@@ -71,13 +66,22 @@ export default function Home({ navigation }) {
             SetUserData(userData);
         });
     };
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
+
+    const showDatePicker = () => {
+        setShow(true);
+    };
     const updateData = async () => {
         try {
             const userDocRef = doc(db, "users", UserData.uid);
             await updateDoc(userDocRef, {
                 name: name,
                 phone: phone,
-                birthdate: BirthDate,
+                birthdate: date.toLocaleDateString(),
             });
             Alert.alert("Success", "Your data has been updated!");
         } catch (error) {
@@ -117,24 +121,18 @@ export default function Home({ navigation }) {
 
 
     return (
-        
+        <>
             <ImageBackground
                 style={{ flex: 1 }}
                 source={wp}>
-                
-                    <SafeAreaView>
-        <ScrollView
-        
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }>
+                <ScrollView>
                     <KeyboardAvoidingView behavior="position">
                         <ImageBackground
                             style={{ flex: 1 }}
                             source={back}>
 
 
-                            <View style={{ width: '30%', height: '15%', marginLeft: '37%', marginTop: '7%' }}>
+                            <View style={{ width: '30%', height: '15%', marginLeft: '36.5%', marginTop: '10%' }}>
 
                                 <ProfileAvatar />
                             </View>
@@ -178,14 +176,24 @@ export default function Home({ navigation }) {
                                     keyboardType="numeric"
                                     editable={isEnabled}
                                 />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Birth Date "
-                                    value={BirthDate}
-                                    onChangeText={(text) => setBirthdate(text)}
-                                    keyboardType="numeric"
-                                    editable={isEnabled}
-                                />
+                                <TouchableOpacity onPress={showDatePicker}>
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Birth Date "
+                                        value={date.toLocaleDateString()}
+                                        onChangeText={(text) => setDate(text)}
+                                        keyboardType="numeric"
+                                        editable={false}
+                                    />
+                                </TouchableOpacity>
+                                {show && (
+                                    <DateTimePicker
+                                        value={date}
+                                        mode="date"
+                                        display="default"
+                                        onChange={onChange}
+                                    />
+                                )}
 
                                 {isEnabled ? (
                                     <TouchableOpacity style={styles.buttonn} onPress={updateData}>
@@ -199,10 +207,9 @@ export default function Home({ navigation }) {
                             </View>
                         </ImageBackground>
                     </KeyboardAvoidingView>
-                    </ScrollView>
-    </SafeAreaView>
+                </ScrollView>
             </ImageBackground>
-     
+        </>
     );
 }
 
