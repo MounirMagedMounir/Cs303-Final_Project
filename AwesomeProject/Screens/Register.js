@@ -233,10 +233,10 @@ export default function Signup({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          <View style={{flexDirection:'row',marginLeft:45,marginTop:20,marginBottom:100}}>
-      <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='#539165' />
-          <TouchOpacity Src={Googlee} borderColorr='#539165'   onPress={hangleGoolge}   />
-          <TouchOpacity  borderColorr='#539165' onPress={()=>{}} Src={Twitter} />
+          <View style={{flexDirection:'row',marginLeft:45,marginTop:-150,marginBottom:10}}>
+      <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='red' />
+          <TouchOpacity Src={Googlee} borderColorr='#fff'   onPress={hangleGoolge}   />
+          <TouchOpacity  borderColorr='red' onPress={()=>{}} Src={Twitter} />
           </View>
         </ImageBackground>
       </ScrollView>
