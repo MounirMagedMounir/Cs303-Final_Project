@@ -2,7 +2,7 @@ import React from "react";
 import {
   View,
   TextInput,
-  SafeAreaView,
+  SafeAreaView,RefreshControl,
   ScrollView,
   ImageBackground,
   StyleSheet,
@@ -17,7 +17,6 @@ import Facebook from "../assets/facebook.png";
 import Googlee from "../assets/google.png";
 import Twitter from "../assets/twitter.png";
 import TouchOpacity from "../Components/TouchOpacity";
-import {launchCamera,launchImageLibrary} from 'react-native-image-picker';
 import { auth, db } from "../firebase";
 import { collection, addDoc, doc,setDoc  } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -43,6 +42,18 @@ export default function Signup({ navigation }) {
   const [Icon2, SetIcon2] = useState("eye-off-outline");
   const [bool, Setbool] = useState(true);
   const [bool2, Setbool2] = useState(true);
+
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
+  
   console.log(bool);
   const ChangeIcon = () => {
     if (Icon === "eye-off-outline") {
@@ -136,6 +147,12 @@ export default function Signup({ navigation }) {
   }, [response]);
 
   return (
+    <SafeAreaView style={styles.container}>
+    <ScrollView
+    
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
     <SafeAreaView >
     <ScrollView showsVerticalScrollIndicator={false}>
     <ImageBackground source={require('../assets/pexels-photo-8450256.webp')} size="lg" alt='logo' w="full" resizeMode="cover" >
@@ -181,7 +198,8 @@ export default function Signup({ navigation }) {
         </ImageBackground>
     </ScrollView>
     </SafeAreaView>
-  
+    </ScrollView>
+    </SafeAreaView>
     );
   };
   

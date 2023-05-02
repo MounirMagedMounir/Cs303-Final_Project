@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
+  Button,RefreshControl,
   SafeAreaView,
   ScrollView,
   Animated,
@@ -41,6 +41,18 @@ export default function Home({ navigation }) {
 
   const [authUser, setAuthUser] = useState(null);
 
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getUserData();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
+
   useEffect(() => {
     getUserData();
     const listen = onAuthStateChanged(auth, (user) => {
@@ -53,14 +65,17 @@ export default function Home({ navigation }) {
       }
     });
     return () => {
+      getUserData();
       listen();
     };
   }, []);
 
   useEffect(() => {
+    getUserData();
     const listen = onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthUser(user);
+        getUserData();
         setState(true);
       } else {
         setAuthUser(null);
@@ -68,6 +83,7 @@ export default function Home({ navigation }) {
       }
     });
     return () => {
+      getUserData();
       listen();
     };
   }, []);
@@ -88,6 +104,12 @@ export default function Home({ navigation }) {
   console.log(UserData);
 
   return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+      
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.container}>
@@ -250,6 +272,8 @@ export default function Home({ navigation }) {
         </View>
       </ScrollView>
     </View>
+    </ScrollView>
+    </SafeAreaView>
   );
 }
 

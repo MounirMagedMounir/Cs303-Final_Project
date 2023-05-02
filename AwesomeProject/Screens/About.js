@@ -3,18 +3,32 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
+  Image,RefreshControl, SafeAreaView,
   ImageBackground,
   ScrollView,
 } from "react-native";
-import { useState } from "react";
+import React,{ useState } from "react";
 
 import Footer from "../Components/Footer";
 import R3 from "../assets/R3.png";
 
 export default function About({ navigation }) {
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   return (
-    <>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+      
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
       <ImageBackground style={styles.imageBackground} source={R3}>
         <View>
           <View style={styles.container}>
@@ -41,7 +55,8 @@ export default function About({ navigation }) {
 
         <StatusBar style="dark" />
       </ImageBackground>
-    </>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

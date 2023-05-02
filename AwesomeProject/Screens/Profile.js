@@ -1,6 +1,6 @@
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, Switch, ImageBackground, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Switch, ImageBackground, KeyboardAvoidingView, ScrollView,SafeAreaView,RefreshControl, } from 'react-native';
 import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
-import { useEffect, useState } from 'react';
+import  React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase'
 import { Alert } from 'react-native';
 import { onAuthStateChanged } from "firebase/auth";
@@ -19,6 +19,16 @@ export default function Home({ navigation }) {
 
     const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
     const userr = auth.currentUser;
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      setTimeout(() => {
+        setRefreshing(false);
+      }, 2000);
+    }, []);
+  
 
     useEffect(() => {
         getUserData();
@@ -107,18 +117,24 @@ export default function Home({ navigation }) {
 
 
     return (
-        <>
+        
             <ImageBackground
                 style={{ flex: 1 }}
                 source={wp}>
-                <ScrollView>
+                
+                    <SafeAreaView>
+        <ScrollView
+        
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
                     <KeyboardAvoidingView behavior="position">
                         <ImageBackground
                             style={{ flex: 1 }}
                             source={back}>
 
 
-                            <View style={{ width: '30%', height: '15%', marginLeft: '36.5%', marginTop: '10%' }}>
+                            <View style={{ width: '30%', height: '15%', marginLeft: '37%', marginTop: '7%' }}>
 
                                 <ProfileAvatar />
                             </View>
@@ -183,9 +199,10 @@ export default function Home({ navigation }) {
                             </View>
                         </ImageBackground>
                     </KeyboardAvoidingView>
-                </ScrollView>
+                    </ScrollView>
+    </SafeAreaView>
             </ImageBackground>
-        </>
+     
     );
 }
 
