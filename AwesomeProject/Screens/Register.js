@@ -19,13 +19,16 @@ import Botton from "../Components/btn";
 import Facebook from "../assets/facebook.png";
 import Googlee from "../assets/google.png";
 import Twitter from "../assets/twitter.png";
+import TouchOpacity  from "../Components/TouchOpacity"
 import { auth, db } from "../firebase";
+import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import * as Google from "expo-auth-session/providers/google";
 import { Alert } from "react-native";
 export default function Signup({ navigation }) {
+  var provider = new GoogleAuthProvider();
   const [accessToken, SetAccessToken] = useState();
   const [userInfo, SetUserInfo] = useState();
   const [request, response, promptAsync] = Google.useAuthRequest({
@@ -75,7 +78,32 @@ export default function Signup({ navigation }) {
   const showDatePicker = () => {
     setShow(true);
   };
-
+  const hangleGoolge=()=>{
+    console.log("HERE");
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+     console.log(user.email);
+    Alert.alert("done google");
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      console.log(errorMessage);
+      console.log(errorCode);
+      
+      
+    });
+  }
   const handleSignUp = async () => {
     if (name.trim().length < 2) {
       Alert.alert("please enter a name");
@@ -204,11 +232,12 @@ export default function Signup({ navigation }) {
               <Text style={{ color: '#000', fontWeight: 700, marginLeft: 10, marginRight: 5, marginBottom: 170, marginTop: -11 }}>Login</Text>
             </TouchableOpacity>
           </View>
-          {/* <View style={{flexDirection:'row',marginLeft:45,marginTop:20,marginBottom:100}}>
+
+          <View style={{flexDirection:'row',marginLeft:45,marginTop:20,marginBottom:100}}>
       <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='#539165' />
-          <TouchOpacity Src={Googlee} borderColorr='#539165' title={accessToken?"Get user Data":"Login" } style={{width:300}} onPress={accessToken?getUserData:()=>promptAsync({useProxy:true,showInRecents:true})}   />
+          <TouchOpacity Src={Googlee} borderColorr='#539165'   onPress={hangleGoolge}   />
           <TouchOpacity  borderColorr='#539165' onPress={()=>{}} Src={Twitter} />
-          </View> */}
+          </View>
         </ImageBackground>
       </ScrollView>
     </SafeAreaView>
