@@ -1,8 +1,9 @@
 import React from "react";
+import no from '../assets/no.png'
 import {
   View,
   TextInput,
-  SafeAreaView,RefreshControl,
+  SafeAreaView,
   ScrollView,
   ImageBackground,
   StyleSheet,
@@ -10,21 +11,22 @@ import {
   Image,
   Text,
 } from "react-native";
+import { Button, Platform } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import InputField from "../Components/Input";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Botton from "../Components/btn";
 import Facebook from "../assets/facebook.png";
 import Googlee from "../assets/google.png";
 import Twitter from "../assets/twitter.png";
-import TouchOpacity from "../Components/TouchOpacity";
 import { auth, db } from "../firebase";
-import { collection, addDoc, doc,setDoc  } from "firebase/firestore";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import * as Google from "expo-auth-session/providers/google";
 import { Alert } from "react-native";
 export default function Signup({ navigation }) {
-   const [accessToken, SetAccessToken] = useState();
+  const [accessToken, SetAccessToken] = useState();
   const [userInfo, SetUserInfo] = useState();
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
@@ -42,18 +44,8 @@ export default function Signup({ navigation }) {
   const [Icon2, SetIcon2] = useState("eye-off-outline");
   const [bool, Setbool] = useState(true);
   const [bool2, Setbool2] = useState(true);
-
-
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
-  
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
   console.log(bool);
   const ChangeIcon = () => {
     if (Icon === "eye-off-outline") {
@@ -73,7 +65,17 @@ export default function Signup({ navigation }) {
       Setbool2(true);
     }
   };
- 
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
+
+  const showDatePicker = () => {
+    setShow(true);
+  };
+
   const handleSignUp = async () => {
     if (name.trim().length < 2) {
       Alert.alert("please enter a name");
@@ -82,14 +84,14 @@ export default function Signup({ navigation }) {
         await createUserWithEmailAndPassword(auth, email, password)
           .then(async (userCredential) => {
             const user = userCredential.user;
-            await setDoc(doc(db, "users",auth.currentUser.uid), {
+            await setDoc(doc(db, "users", auth.currentUser.uid), {
               email: email.toLowerCase().trim(),
               uid: user.uid,
               name: name.trim(),
               password: password.trim(),
               phone: phone.trim(),
-              image:"https://res.cloudinary.com/zpune/image/upload/v1645429478/random/user_u3itjd.png",
-              BirthDate:day+"/"+month+"/"+year
+              image: no,
+              BirthDate: date.toLocaleDateString()
             });
             Alert.alert("done");
             navigation.navigate("Login");
@@ -120,15 +122,15 @@ export default function Signup({ navigation }) {
     await createUserWithEmailAndPassword(auth, userInfo.email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
-         await setDoc(doc(db, "users",auth.currentUser.uid), {
+        await setDoc(doc(db, "users", auth.currentUser.uid), {
           email: userInfo.email.toLowerCase().trim(),
           uid: user.uid,
           name: userInfo.name.trim(),
           password: password.trim(),
-         day:day,
-        Month:month,
-         year:year,
-          Card:[],
+          day: day,
+          Month: month,
+          year: year,
+          Card: [],
         });
         Alert.alert("done");
       })
@@ -147,96 +149,115 @@ export default function Signup({ navigation }) {
   }, [response]);
 
   return (
-    <SafeAreaView style={styles.container}>
-    <ScrollView
-    
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }>
     <SafeAreaView >
-    <ScrollView showsVerticalScrollIndicator={false}>
-    <ImageBackground source={require('../assets/pexels-photo-8450256.webp')} size="lg" alt='logo' w="full" resizeMode="cover" >
-    <View style={{marginTop:35,marginLeft:"20%",marginRight:"20%"}}>
-    <Text style={{textAlign:"center",fontSize:30,color:'#539165',fontWeight:"bold",marginBottom:20}}>Register</Text>
-    <InputField  label={'Full name'}  value={name} onChangeText={SetName} />
-    <Ionicons name="person-circle-outline"size={17} color="#539165" style={styles.icons} /> 
-    <InputField  label={'Email'}   keyboardType="email-address" value={email} onChangeText={SetEmail} />
-    <Ionicons name="mail-outline"size={17} color="#539165" style={styles.icons} />
-  
-    <InputField icon={<Ionicons name={Icon} size={19} color="#666" style={{marginTop:20,marginLeft:-30}} onPress={ChangeIcon}></Ionicons>} label={'Password'}  inputType="password" value={password} onChangeText={SetPassword} r={bool} />
-    <Ionicons name='ios-lock-closed-outline' size={17} color="#539165" style={styles.icons} /> 
-    {/* icon={<Ionicons name={Icon} size={19} color="#666" style={{marginTop:-90,marginBottom:100,marginLeft:190}} onPress={ChangeIcon}></Ionicons>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ImageBackground source={require('../assets/249.jpg')} size="lg" alt='logo' w="full" resizeMode="cover" >
+          <View style={{ marginTop: 35, marginLeft: "20%", marginRight: "20%" }}>
+            <Text style={{ textAlign: "center", fontSize: 40, color: '#000', fontWeight: "bold", marginBottom: 34 }}>Hello!</Text>
+            <InputField label={'Full name'} value={name} onChangeText={SetName} />
+            <Ionicons name="person-circle-outline" size={17} color="#539165" style={styles.icons} />
+            <InputField label={'Email'} keyboardType="email-address" value={email} onChangeText={SetEmail} />
+            <Ionicons name="mail-outline" size={17} color="#539165" style={styles.icons} />
+
+            <InputField icon={<Ionicons name={Icon} size={19} color="#666" style={{ marginTop: 20, marginLeft: -30 }} onPress={ChangeIcon}></Ionicons>} label={'Password'} inputType="password" value={password} onChangeText={SetPassword} r={bool} />
+            <Ionicons name='ios-lock-closed-outline' size={17} color="#539165" style={styles.icons} />
+            {/* icon={<Ionicons name={Icon} size={19} color="#666" style={{marginTop:-90,marginBottom:100,marginLeft:190}} onPress={ChangeIcon}></Ionicons>
     } */}
-    <InputField icon={<Ionicons name={Icon2} size={19} color="#666" style={{marginTop:20,marginLeft:-30}} onPress={ChangeIcon2}></Ionicons> } label={'Confirm password'}  inputType="password"  value={confPassword} onChangeText={SetconfPassword} r={bool2}/>
-    {/* <Ionicons name={Icon2} size={19} color="#666" style={{marginTop:-90,marginBottom:60,marginLeft:190}} onPress={ChangeIcon2}></Ionicons> */}
-    <Ionicons name='ios-lock-closed-outline' size={17} color="#539165" style={styles.icons} /> 
-    <InputField   label={'Phone'}  keyboardType='numeric'  onChangeText={SetPhone}   />
-    <Ionicons name='call-outline' size={17} color="#539165" style={styles.icons} />
-   
+            <InputField icon={<Ionicons name={Icon2} size={19} color="#666" style={{ marginTop: 20, marginLeft: -30 }} onPress={ChangeIcon2}></Ionicons>} label={'Confirm password'} inputType="password" value={confPassword} onChangeText={SetconfPassword} r={bool2} />
+            {/* <Ionicons name={Icon2} size={19} color="#666" style={{marginTop:-90,marginBottom:60,marginLeft:190}} onPress={ChangeIcon2}></Ionicons> */}
+            <Ionicons name='ios-lock-closed-outline' size={17} color="#539165" style={styles.icons} />
+            <InputField label={'Phone'} keyboardType='numeric' onChangeText={SetPhone} />
+            <Ionicons name='call-outline' size={17} color="#539165" style={styles.icons} />
+           
 
-  <View style={{flexDirection:"row",justifyContent:"space-around",marginLeft:10}}>
+          
+            <TouchableOpacity onPress={showDatePicker}>
+            <TextInput
+                    style={styles.input}
+                    placeholder="Birth Date "
+                    value={date.toLocaleDateString()}
+                    onChangeText={(text) => setDate(text)}
+                    keyboardType="numeric"
+                    editable={false}
+                />
+            </TouchableOpacity>
 
-  <TextInput    placeholder={'dd'}  keyboardType='numeric'  onChangeText={SetDay}  style={styles.StyleInput} maxLength={2} />
- 
-    <TextInput   placeholder={'mm'}  keyboardType='numeric'  onChangeText={SetMonth}  style={styles.StyleInput} maxLength={2}/>
-    <TextInput   placeholder={'yy'}  keyboardType='numeric'  onChangeText={SetYear}  style={styles.StyleInput} maxLength={4}/>
-  </View>
-  </View>
+      {show && (
+        <DateTimePicker
+          value={date}
+          mode="date"
+          display="default"
+          onChange={onChange}
+        />
+      )}
+
+            <View style={{ flexDirection: "row", justifyContent: "space-around", marginLeft: 10 }}>
+
+            </View>
+          </View>
           <Botton label={"Register"} onPress={handleSignUp} />
- 
-    <View style={{flexDirection:'row',marginLeft:45,marginTop:20}}>
+
+
+          <View style={{ flexDirection: 'row', marginTop: 20 }}>
+            <Text style={{ fontSize: 15, fontWeight: 'bold', marginLeft: 116, color: '#000', marginTop: -12 }}>Already register?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('login')}>
+              <Text style={{ color: '#000', fontWeight: 700, marginLeft: 10, marginRight: 5, marginBottom: 170, marginTop: -11 }}>Login</Text>
+            </TouchableOpacity>
+          </View>
+          {/* <View style={{flexDirection:'row',marginLeft:45,marginTop:20,marginBottom:100}}>
       <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='#539165' />
           <TouchOpacity Src={Googlee} borderColorr='#539165' title={accessToken?"Get user Data":"Login" } style={{width:300}} onPress={accessToken?getUserData:()=>promptAsync({useProxy:true,showInRecents:true})}   />
           <TouchOpacity  borderColorr='#539165' onPress={()=>{}} Src={Twitter} />
-          </View>
-          <View style={{flexDirection:'row',marginTop:20}}>
-                    <Text style={{fontSize:15,fontWeight:'bold',marginLeft:90,color:'#fff'}}>Already register?</Text>
-            <TouchableOpacity onPress={()=>navigation.navigate('login')}>
-            <Text style={{color:'#539165',fontWeight:700,marginLeft:10,marginRight:5,borderBottomColor: '#539165',borderBottomWidth: 2,marginBottom: 70}}>Login</Text>
-            </TouchableOpacity>
-            </View>  
+          </View> */}
         </ImageBackground>
-    </ScrollView>
+      </ScrollView>
     </SafeAreaView>
-    </ScrollView>
-    </SafeAreaView>
-    );
-  };
-  
-      const styles=StyleSheet.create({
-        container: {
-          flex:1,
-        backgroundColor:"#fff",
-        alignItems: "center",
-        justifyContent: "center",
-      },
-      // backgroundImage: {
-      //   width: "100%",
-      //   height:700,   
-      //  },
-      profilePic:{
-        width:50,
-        height:50
-      },
-      userInfo:{
-        alignItems: "center",
-        justifyContent: "center"
-      },
-      icons:{
-        marginTop:-90,marginLeft:-2,marginBottom:45
-      },
-      StyleInput: {
-        // flex: 1,
-        width: "30%",
-        padding: 15,
-        textAlign: "center",
-       marginLeft:-20,
-        marginBottom: 25,
-        backgroundColor: "#fff",
-        borderRadius: 20,
-        borderColor: "#539165",
-        borderWidth: 1,
-        flexWrap:'wrap'
-      }
 
-    });
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profilePic: {
+    width: 50,
+    height: 50
+  },
+  userInfo: {
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  icons: {
+    marginTop: -80,
+    marginLeft: -15,
+    marginBottom: 35,
+  },
+  input: {
+    width: '135%',
+    padding: 17,
+    marginBottom: 13,
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    borderColor: 'red',
+    borderWidth: 1,
+    textAlign:'center',
+    marginLeft:-40,
+},
+  StyleInput: {
+    width: "30%",
+    padding: 15,
+    textAlign: "center",
+    marginLeft: -20,
+    marginBottom: 25,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    borderColor: "#539165",
+    borderWidth: 1,
+    flexWrap: 'wrap'
+  }
+
+});
