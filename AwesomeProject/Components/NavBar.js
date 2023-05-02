@@ -26,6 +26,8 @@ import More from '../Screens/More';
 import Cart from '../Screens/Cart';
 import Profile from '../Screens/Profile';
 import Product from '../Screens/ProductsList';
+import ProductDetails from '../Screens/ProductDetails';
+import { NativeBaseProvider } from "native-base";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,6 +47,7 @@ function NavBar()
 
     return (
       <NavigationContainer>
+        < NativeBaseProvider>
       <Stack.Navigator> 
          <Stack.Screen
            name="Generous"
@@ -64,7 +67,9 @@ function NavBar()
               color: "black",
             },
           }}/>
+         <Stack.Screen name="ProductDetails" component={ProductDetails} />
       </Stack.Navigator>
+      </NativeBaseProvider>
     </NavigationContainer>
     );
 }
