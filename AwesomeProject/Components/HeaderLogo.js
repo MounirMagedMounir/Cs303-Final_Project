@@ -1,51 +1,40 @@
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
   TouchableOpacity,
-  navigation,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-function HeaderAboutLogo({}) {
+function HeaderAboutLogo() {
   const navigation = useNavigation();
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        flexWrap: "wrap",
-        alignItems: "center",
-        //backgroundColor: "#19376D",
-      }}
-    >
-      <Text
-        style={{
-          color: "black",
-          padding: 1,
-          fontSize: 20,
-          fontWeight: "bold",
-          marginRight: -1,
-          marginLeft: -20,
-        }}
-      >
-        About
-      </Text>
+    <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-        <Image style={styles.imglogo1} source={require("../assets/R.png")} />
+        <Image style={styles.logo} source={require("../assets/IMG-20230501-WA0067.jpg")} />
       </TouchableOpacity>
     </View>
   );
 }
-export default HeaderAboutLogo;
+
 const styles = StyleSheet.create({
-  imglogo1: {
-    width: 30,
-    height: 30,
-    marginRight: -5,
-    //marginLeft: 10,
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    backgroundColor: "#FFFFFF",
+    height: 50,
+    borderBottomWidth: 1,
+    borderBottomColor: "#DDDDDD",
+  },
+  logo: {
+    width: 100,
+    height: 50,
     resizeMode: "contain",
   },
 });
+
+export default HeaderAboutLogo;

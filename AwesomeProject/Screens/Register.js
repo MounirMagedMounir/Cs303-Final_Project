@@ -3,7 +3,7 @@ import no from '../assets/no.png'
 import {
   View,
   TextInput,
-  SafeAreaView,
+  SafeAreaView,RefreshControl,
   ScrollView,
   ImageBackground,
   StyleSheet,
@@ -19,17 +19,20 @@ import Botton from "../Components/btn";
 import Facebook from "../assets/facebook.png";
 import Googlee from "../assets/google.png";
 import Twitter from "../assets/twitter.png";
+import TouchOpacity  from "../Components/TouchOpacity"
 import { auth, db } from "../firebase";
+import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useEffect, useState } from "react";
 import * as Google from "expo-auth-session/providers/google";
 import { Alert } from "react-native";
 export default function Signup({ navigation }) {
+  var provider = new GoogleAuthProvider();
   const [accessToken, SetAccessToken] = useState();
   const [userInfo, SetUserInfo] = useState();
   const [request, response, promptAsync] = Google.useAuthRequest({
-    expoClientId:
+    webClientId:
       "248629810532-gae2c1d016o919dhta3kdgtojt9cegoq.apps.googleusercontent.com",
   });
   const [name, SetName] = useState("");
@@ -46,6 +49,17 @@ export default function Signup({ navigation }) {
   const [bool2, Setbool2] = useState(true);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getUserData();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   console.log(bool);
   const ChangeIcon = () => {
     if (Icon === "eye-off-outline") {
@@ -75,7 +89,32 @@ export default function Signup({ navigation }) {
   const showDatePicker = () => {
     setShow(true);
   };
-
+  const hangleGoolge=()=>{
+    console.log("HERE");
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+     console.log(user.email);
+    Alert.alert("done google");
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      console.log(errorMessage);
+      console.log(errorCode);
+      
+      
+    });
+  }
   const handleSignUp = async () => {
     if (name.trim().length < 2) {
       Alert.alert("please enter a name");
@@ -149,8 +188,12 @@ export default function Signup({ navigation }) {
   }, [response]);
 
   return (
-    <SafeAreaView >
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+      showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <ImageBackground source={require('../assets/249.jpg')} size="lg" alt='logo' w="full" resizeMode="cover" >
           <View style={{ marginTop: 35, marginLeft: "20%", marginRight: "20%" }}>
             <Text style={{ textAlign: "center", fontSize: 40, color: '#000', fontWeight: "bold", marginBottom: 34 }}>Hello!</Text>
@@ -200,15 +243,16 @@ export default function Signup({ navigation }) {
 
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
             <Text style={{ fontSize: 15, fontWeight: 'bold', marginLeft: 116, color: '#000', marginTop: -12 }}>Already register?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('login')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={{ color: '#000', fontWeight: 700, marginLeft: 10, marginRight: 5, marginBottom: 170, marginTop: -11 }}>Login</Text>
             </TouchableOpacity>
           </View>
-          {/* <View style={{flexDirection:'row',marginLeft:45,marginTop:20,marginBottom:100}}>
-      <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='#539165' />
-          <TouchOpacity Src={Googlee} borderColorr='#539165' title={accessToken?"Get user Data":"Login" } style={{width:300}} onPress={accessToken?getUserData:()=>promptAsync({useProxy:true,showInRecents:true})}   />
-          <TouchOpacity  borderColorr='#539165' onPress={()=>{}} Src={Twitter} />
-          </View> */}
+
+          <View style={{flexDirection:'row',marginLeft:45,marginTop:-150,marginBottom:10}}>
+      <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='red' />
+          <TouchOpacity Src={Googlee} borderColorr='#fff'   onPress={hangleGoolge}   />
+          <TouchOpacity  borderColorr='red' onPress={()=>{}} Src={Twitter} />
+          </View>
         </ImageBackground>
       </ScrollView>
     </SafeAreaView>
