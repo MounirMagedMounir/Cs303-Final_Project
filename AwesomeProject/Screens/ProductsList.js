@@ -9,12 +9,12 @@ import {
   Image,
 } from "react-native";
 // import { getProducts } from "../services/ProductsService";
-import { Product } from "../Components/product";
-import { getProducts } from "../services/product";
+// import { Product } from "../Components/product";
+import { getProducts } from "../data/product";
 import { Box, Center, Flex, Heading, VStack } from "native-base";
 import Rating from "../Components/Rating";
-import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity } from "react-native-gesture-handler";
+// import { LinearGradient } from "expo-linear-gradient";
+// import { TouchableOpacity } from "react-native-gesture-handler";
 
 export function ProductsList({ navigation }) {
   // function renderProduct({item: product}){

@@ -25,7 +25,7 @@ import About from '../Screens/About';
 import More from '../Screens/More';
 import Cart from '../Screens/Cart';
 import Profile from '../Screens/Profile';
-import Product from '../Screens/Product';
+import Product from '../Screens/ProductsList';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +36,7 @@ const aboutName = "About";
 const moreName = "More";
 const cartName = "Cart";
 const profileName = "Profile";
-const productName = "Products";
+const productName = "ProductsList";
 
 
 function NavBar() 

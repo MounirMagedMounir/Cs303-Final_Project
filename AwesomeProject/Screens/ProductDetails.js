@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {Text, StyleSheet, View, Image, ScrollView, SafeAreaView, Button} from "react-native";
 // import { getProduct } from '../services/ProductsService';
-import {getProduct} from "../services/product"
+import {getProduct} from "../data/product"
 import {CartContext} from "../CartContext";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

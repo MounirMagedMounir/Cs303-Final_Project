@@ -1,6 +1,6 @@
 import React, {createContext, useState} from "react";
 // import {getProduct} from "./services/ProductsService.js";
-import {getProduct} from "./services/product.js"
+import {getProduct} from "./data/product.js"
 export const CartContext = createContext();
 
 export function CartProvider(props){

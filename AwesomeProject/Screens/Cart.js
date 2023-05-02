@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useContext} from "react";
 import {View, Image, Text, FlatList, StyleSheet} from "react-native";
 import {CartContext} from "../CartContext";
-import {getProduct} from "../services/product"
+// import {getProduct} from "../data/product"
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button } from "native-base";
-import {CartEmpty} from "../Components/CartEmpty"
+// import {CartEmpty} from "../Components/CartEmpty"
 import { FontAwesome } from '@expo/vector-icons';
 export  function CartNew(){
     
