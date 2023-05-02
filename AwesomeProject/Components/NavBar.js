@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import {
   View,
 } from "react-native";
-
+import HeaderAboutLogo from "../Components/HeaderLogo";
 
 const Stack = createNativeStackNavigator();
 
@@ -51,13 +51,21 @@ function NavBar()
            component={Morefun}
            options={{ headerShown: false }}
          />
-       
-         <Stack.Screen name="About" component={About} />
+
+         <Stack.Screen name="About" component={About} options={{
+            headerTitle: () => <HeaderAboutLogo />,
+            headerStyle: {
+              backgroundColor: "gold",
+            },
+
+            headerTintColor: "green",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "black",
+            },
+          }}/>
       </Stack.Navigator>
     </NavigationContainer>
-      
-
-      
     );
 }
 
@@ -118,38 +126,93 @@ onAuthStateChanged(auth, (user) => {
       },
     })}
     tabBarOptions={{
-        activeTintColor: '#539165',
+      // hex code for red color
+        activeTintColor: '#ff0000',
         inactiveTintColor: 'grey',
         labelStyle: { paddingBottom: 10, fontSize: 10 },
         style: { padding: 10, height: 70}
       }}
       >
 
-        <Tab.Screen name={homeName} component={Home} />
-        <Tab.Screen name={productName} component={Product} />
+        <Tab.Screen name={homeName} component={Home}  options={{
+            headerTitle: () => <HeaderAboutLogo />,
+            headerStyle: {
+              // backgroundColor: "gold",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "black",
+            },
+          }}
+          />
+        <Tab.Screen name={productName} component={Product} options={{
+            headerTitle: () => <HeaderAboutLogo />,
+            headerStyle: {
+              // backgroundColor: "gold",
+            },
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "black",
+            },
+          }}/>
 
         {State == true ? (
-        <Tab.Screen name={profileName} component={Profile} />
+        <Tab.Screen name={profileName} component={Profile} options={{
+          headerTitle: () => <HeaderAboutLogo />,
+          headerStyle: {
+            // backgroundColor: "gold",
+          },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "black",
+          },
+        }}/>
           ) : (
 
-        <Tab.Screen name={loginName} component={Login} />
+        <Tab.Screen name={loginName} component={Login} options={{
+          headerTitle: () => <HeaderAboutLogo />,
+          headerStyle: {
+            // backgroundColor: "gold",
+          },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "black",
+          },
+        }}/>
         )}
 
         {State == true ? (
-        <Tab.Screen name={cartName} component={Cart} />
+        <Tab.Screen name={cartName} component={Cart} options={{
+          headerTitle: () => <HeaderAboutLogo />,
+          headerStyle: {
+            // backgroundColor: "gold",
+          },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "black",
+          },
+        }}/>
           ) : (
-        <Tab.Screen name={registerName} component={Register}/>
+        <Tab.Screen name={registerName} component={Register} options={{
+          headerTitle: () => <HeaderAboutLogo />,
+          headerStyle: {
+            // backgroundColor: "gold",
+          },
+          headerTitleStyle: {
+            fontWeight: "bold",
+            color: "black",
+          },
+        }}/>
         )}
 
-    <Tab.Screen name={moreName} component={More} />
+    <Tab.Screen name={moreName} component={More} options={{
+            headerTitle: () => <HeaderAboutLogo />,
+            headerStyle: {
+              backgroundColor: "white",
+            },
+          }}/>
     
     </Tab.Navigator>
-
-    
-
-
-
-    
   );
 }
 

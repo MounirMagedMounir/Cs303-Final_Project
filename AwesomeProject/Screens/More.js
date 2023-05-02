@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth ,db } from "../firebase";
@@ -9,87 +9,76 @@ import {
     View,
     TouchableOpacity,
     Alert,
-  } from "react-native";
-
-  import About from "../Screens/About";
-  import { useNavigation } from '@react-navigation/native';
-  import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from '@react-navigation/native';
-const Stack = createNativeStackNavigator();
+} from "react-native";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import About from "../Screens/About";
+import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from '@react-navigation/native';
 
 
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
+export default function More({ navigation }) {
 
-export default function More({navigation})
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-{
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsLoggedIn(!!user);
+    });
 
+    return () => unsubscribe();
+  }, []);
 
-  
-  const [State, setState] = useState(false);
-
-  const listen=onAuthStateChanged(auth,(user)=>{
-    if(user){
-        setState(true);
-    }else{  
-        setState(false);
-    }
-});
-
-  const logOut = () => {
+  const handleLogout = () => {
     signOut(auth)
       .then(() => {})
       .catch((error) => {});
   };
 
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate("About")} style={styles.button}>
+        <Text style={styles.buttonText}>About</Text>
+      </TouchableOpacity>
 
-    return(
-      <View>
-
-    <TouchableOpacity onPress={() => navigation.navigate("About")} >
-    <Text style= {styles.button}>About</Text>
-    </TouchableOpacity>
-    {State == true ? (
-          <TouchableOpacity onPress = {logOut} >
-          <Text style= {styles.button}>Logout</Text>
-          </TouchableOpacity>
-        ) : (
-          <View>
-           
-          </View>
-        )}
-    
-
-
+      {isLoggedIn && (
+        <TouchableOpacity onPress={handleLogout} style={[styles.button, styles.logoutButton]}>
+          <Text style={[styles.buttonText, styles.logoutButtonText]}>Logout</Text>
+        </TouchableOpacity>
+      )}
     </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F5F5F5",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   button: {
-    backgroundColor: '#fff',
-
-    borderRadius: 5,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 50,
     borderWidth: 1,
-    borderColor: '#000',
-    color : '#539165',
-    fontSize: 70,
+    borderColor: "#000000",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+  },
+  buttonText: {
+    color: "#000000",
+    fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
-    marginTop : 30,
-    marginBottom : 30,
-    marginLeft : 30,
-    marginRight : 30,
-    borderColor: 'grey',
   },
-  hcontainer: {
-    flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 350,
-    marginBottom: 130,
-    opacity: 0,
+  logoutButton: {
+    backgroundColor: "#FF0000",
+    borderColor: "#FF0000",
   },
-
+  logoutButtonText: {
+    color: "#FFFFFF",
+  },
 });
