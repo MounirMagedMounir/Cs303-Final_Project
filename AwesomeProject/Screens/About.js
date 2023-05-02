@@ -3,33 +3,21 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,RefreshControl, SafeAreaView,
+  Image,
   ImageBackground,
   ScrollView,
 } from "react-native";
-import React,{ useState } from "react";
+import { useState } from "react";
 
 import Footer from "../Components/Footer";
 import R3 from "../assets/R3.png";
 
+import b from "../assets/249.jpg";
+
 export default function About({ navigation }) {
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  }, []);
-
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-      
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-      <ImageBackground style={styles.imageBackground} source={R3}>
+    <>
+      <ImageBackground style={styles.imageBackground} source={b}>
         <View>
           <View style={styles.container}>
             <Text style={styles.headline}> About Us:</Text>
@@ -55,8 +43,7 @@ export default function About({ navigation }) {
 
         <StatusBar style="dark" />
       </ImageBackground>
-      </ScrollView>
-    </SafeAreaView>
+    </>
   );
 }
 
@@ -88,26 +75,26 @@ const styles = StyleSheet.create({
   },
 
   headline: {
-    marginHorizontal: 5,
+    marginHorizontal: 1,
     textAlign: "center",
     flex: 0.2,
     height: "35%",
-
+    padding: 5,
     fontSize: 25,
     borderWidth: 3,
-    borderColor: "#19376D",
+    borderColor: "darkred",
     borderBottomWidth: 15,
     fontWeight: "bold",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
-    color: "green",
+    backgroundColor: "lightgray",
+    color: "red",
     // resizeMode: "center",
   },
   headline2: {
     //marginHorizontal: 35,
     borderWidth: 3,
-    borderColor: "#19376D",
+    borderColor: "darkred",
 
     borderBottomWidth: 12,
     flex: 0.3,
@@ -115,8 +102,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black",
-    color: "green",
+    backgroundColor: "lightgray",
+    color: "red",
     textAlign: "center",
   },
   Abouttext: {
@@ -128,6 +115,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     fontSize: 20,
     fontWeight: "bold",
-    color: "darkred",
+    color: "#420000",
   },
 });
