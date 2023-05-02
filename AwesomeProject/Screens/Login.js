@@ -4,6 +4,11 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import b from '../assets/249.jpg'
+import TouchOpacity from '../Components/TouchOpacity';
+import Facebook from "../assets/facebook.png";
+import Googlee from "../assets/google.png";
+import Twitter from "../assets/twitter.png";
+import { ScrollView } from 'native-base';
 
 export default function Login({ navigation }) {
   const [Email, setEmail] = useState('');
@@ -57,8 +62,34 @@ export default function Login({ navigation }) {
         Alert.alert(errorMessage);
       })
   };
-
+  const hangleGoolge=()=>{
+    console.log("HERE");
+    signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+     console.log(user.email);
+    Alert.alert("done google");
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      console.log(errorMessage);
+      console.log(errorCode);
+      
+      
+    });
+  }
   return (
+    <ScrollView>
     <ImageBackground
       source={b}
       style={styles.backgroundImage}
@@ -104,11 +135,16 @@ export default function Login({ navigation }) {
             <Text style={styles.link0}>Register</Text>
           </TouchableOpacity>
         </View>
-
+        <View style={{flexDirection:'row',marginLeft:20,marginTop:25,marginBottom:80}}>
+      <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='red' />
+          <TouchOpacity Src={Googlee} borderColorr='#fff'   onPress={hangleGoolge}   />
+          <TouchOpacity  borderColorr='red' onPress={()=>{}} Src={Twitter} />
+          </View>
 
       </View>
 
     </ImageBackground>
+    </ScrollView>
   );
 }
 

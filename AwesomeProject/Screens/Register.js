@@ -29,12 +29,12 @@ import * as Google from "expo-auth-session/providers/google";
 import { Alert } from "react-native";
 export default function Signup({ navigation }) {
   var provider = new GoogleAuthProvider();
-  const [accessToken, SetAccessToken] = useState();
-  const [userInfo, SetUserInfo] = useState();
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    webClientId:
-      "248629810532-gae2c1d016o919dhta3kdgtojt9cegoq.apps.googleusercontent.com",
-  });
+  // const [accessToken, SetAccessToken] = useState();
+  // const [userInfo, SetUserInfo] = useState();
+  // const [request, response, promptAsync] = Google.useAuthRequest({
+  //   webClientId:
+  //     "248629810532-gae2c1d016o919dhta3kdgtojt9cegoq.apps.googleusercontent.com",
+  // });
   const [name, SetName] = useState("");
   const [phone, SetPhone] = useState("");
   const [day, SetDay] = useState("");
@@ -181,11 +181,11 @@ export default function Signup({ navigation }) {
       });
   };
 
-  useEffect(() => {
-    if (response?.type === "success") {
-      SetAccessToken(response.authentication.accessToken);
-    }
-  }, [response]);
+  // useEffect(() => {
+  //   if (response?.type === "success") {
+  //     SetAccessToken(response.authentication.accessToken);
+  //   }
+  // }, [response]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -248,7 +248,7 @@ export default function Signup({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          <View style={{flexDirection:'row',marginLeft:45,marginTop:-150,marginBottom:10}}>
+          <View style={{flexDirection:'row',marginLeft:70,marginTop:-150,marginBottom:10}}>
       <TouchOpacity  onPress={()=>{}} Src={Facebook} borderColorr='red' />
           <TouchOpacity Src={Googlee} borderColorr='#fff'   onPress={hangleGoolge}   />
           <TouchOpacity  borderColorr='red' onPress={()=>{}} Src={Twitter} />

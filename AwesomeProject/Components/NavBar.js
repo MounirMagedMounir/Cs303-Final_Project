@@ -58,7 +58,7 @@ function NavBar()
          <Stack.Screen name="About" component={About} options={{
             headerTitle: () => <HeaderAboutLogo />,
             headerStyle: {
-              backgroundColor: "gold",
+              backgroundColor: "#fff",
             },
 
             headerTintColor: "green",

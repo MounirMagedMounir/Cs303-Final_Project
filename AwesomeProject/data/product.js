@@ -2,7 +2,7 @@ const products=[
     {
         id:"1",
         name:"sandal spirit",
-        image: require("../assets/product_images/pexels-photo-5199128.jpg"),
+        image: require("../assets/7.png"),
         offPercentage:"10",
         description:'passion and excitement are present by sandal spirit fragrance a blend',
         price:160,
@@ -14,7 +14,7 @@ const products=[
         {
             id:"2",
             name:"royal safron",
-            image: require("../assets/product_images/pexels-photo-3831748.jpg"),
+            image: require("../assets/7.png"),
             offPercentage:"10",
             description:'passion and excitement are present by sandal spirit fragrance a blend',
             price:90,
@@ -26,7 +26,7 @@ const products=[
         {
             id:"3",
             name:"white safron",
-            image: require("../assets/product_images/pexels-photo-3640668.jpg"),
+            image: require("../assets/7.png"),
             offPercentage:"10",
             description:'passion and excitement are present by sandal spirit fragrance a blend',
             price:200,
@@ -38,7 +38,7 @@ const products=[
         {
             id:"4",
             name:"Kyara  Oil",
-            image: require("../assets/product_images/pexels-photo-4736027.jpg"),
+            image: require("../assets/7.png"),
             offPercentage:"10",
             description:'passion and excitement are present by sandal spirit fragrance a blend',
             price:780,
@@ -50,7 +50,7 @@ const products=[
         {
             id:"5",
             name:"Red Safron",
-            image: require("../assets/product_images/pexels-photo-8361478.jpg"),
+            image: require("../assets/7.png"),
             offPercentage:"10",
             // image:"https://images.pexels.com/photos/8361478/pexels-photo-8361478.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
             description:'passion and excitement are present by sandal spirit fragrance a blend',
@@ -63,7 +63,7 @@ const products=[
         {
             id:"6",
             name:"Red Safron",
-            image: require("../assets/product_images/pexels-photo-8365693.jpg"),
+            image: require("../assets/7.png"),
             offPercentage:"10",
             // image:"https://images.pexels.com/photos/8365693/pexels-photo-8365693.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1.jpeg",
             description:'passion and excitement are present by sandal spirit fragrance a blend',
@@ -76,7 +76,7 @@ const products=[
 {
     id:"7",
     name:"sandal spirit",
-    image: require("../assets/product_images/pexels-photo-5199128.jpg"),
+    image: require("../assets/7.png"),
     offPercentage:"10",
     description:'passion and excitement are present by sandal spirit fragrance a blend',
     price:160,
@@ -88,7 +88,7 @@ const products=[
     {
         id:"8",
         name:"royal safron",
-        image: require("../assets/product_images/pexels-photo-3831748.jpg"),
+        image: require("../assets/7.png"),
         offPercentage:"10",
         description:'passion and excitement are present by sandal spirit fragrance a blend',
         price:90,
@@ -100,7 +100,7 @@ const products=[
     {
         id:"9",
         name:"white safron",
-        image: require("../assets/product_images/pexels-photo-3640668.jpg"),
+        image: require("../assets/7.png"),
         offPercentage:"10",
         description:'passion and excitement are present by sandal spirit fragrance a blend',
         price:200,
@@ -112,7 +112,7 @@ const products=[
     {
         id:"10",
         name:"Kyara  Oil",
-        image: require("../assets/product_images/pexels-photo-4736027.jpg"),
+        image: require("../assets/7.png"),
         offPercentage:"10",
         description:'passion and excitement are present by sandal spirit fragrance a blend',
         price:780,
@@ -124,7 +124,7 @@ const products=[
     {
         id:"11",
         name:"Red Safron",
-        image: require("../assets/product_images/pexels-photo-8361478.jpg"),
+        image: require("../assets/7.png"),
         offPercentage:"10",
         // image:"https://images.pexels.com/photos/8361478/pexels-photo-8361478.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
         description:'passion and excitement are present by sandal spirit fragrance a blend',
@@ -137,7 +137,7 @@ const products=[
     {
         id:"12",
         name:"Red Safron",
-        image: require("../assets/product_images/pexels-photo-8365693.jpg"),
+        image: require("../assets/7.png"),
         offPercentage:"10",
         // image:"https://images.pexels.com/photos/8365693/pexels-photo-8365693.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1.jpeg",
         description:'passion and excitement are present by sandal spirit fragrance a blend',

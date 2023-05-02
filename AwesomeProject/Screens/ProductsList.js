@@ -16,7 +16,7 @@ import Rating from "../Components/Rating";
 // import { LinearGradient } from "expo-linear-gradient";
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
-export function ProductsList({ navigation }) {
+export default function ProductsList({ navigation }) {
   // function renderProduct({item: product}){
   // return(
   //     <Product

@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button } from "native-base";
 // import {CartEmpty} from "../Components/CartEmpty"
 import { FontAwesome } from '@expo/vector-icons';
-export  function CartNew(){
+export default function Cart({ navigation }){
     
     // const {productId} = route.params;
     // const [product, setProduct] = useState({});
