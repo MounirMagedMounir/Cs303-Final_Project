@@ -3,7 +3,7 @@ import no from '../assets/no.png'
 import {
   View,
   TextInput,
-  SafeAreaView,
+  SafeAreaView,RefreshControl,
   ScrollView,
   ImageBackground,
   StyleSheet,
@@ -46,6 +46,17 @@ export default function Signup({ navigation }) {
   const [bool2, Setbool2] = useState(true);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getUserData();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, []);
+
   console.log(bool);
   const ChangeIcon = () => {
     if (Icon === "eye-off-outline") {
@@ -149,8 +160,12 @@ export default function Signup({ navigation }) {
   }, [response]);
 
   return (
-    <SafeAreaView >
-      <ScrollView showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+      showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <ImageBackground source={require('../assets/249.jpg')} size="lg" alt='logo' w="full" resizeMode="cover" >
           <View style={{ marginTop: 35, marginLeft: "20%", marginRight: "20%" }}>
             <Text style={{ textAlign: "center", fontSize: 40, color: '#000', fontWeight: "bold", marginBottom: 34 }}>Hello!</Text>
@@ -200,7 +215,7 @@ export default function Signup({ navigation }) {
 
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
             <Text style={{ fontSize: 15, fontWeight: 'bold', marginLeft: 116, color: '#000', marginTop: -12 }}>Already register?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('login')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
               <Text style={{ color: '#000', fontWeight: 700, marginLeft: 10, marginRight: 5, marginBottom: 170, marginTop: -11 }}>Login</Text>
             </TouchableOpacity>
           </View>
