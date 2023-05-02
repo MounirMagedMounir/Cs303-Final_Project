@@ -6,12 +6,13 @@ export default function Botton({label, onPress}) {
     <TouchableOpacity
       onPress={onPress}
       style={{
-        width: '100%',
-    backgroundColor: '#539165',
-    padding: 10,
-    borderRadius: 50,
-    marginTop: 0,
-    marginLeft: 0,
+        width: '80%',
+        backgroundColor: 'red',
+        padding: 15,
+        borderRadius: 50,
+        marginTop: 0,
+        marginLeft: '10.6%',
+        justifyContent:'center',
       }}>
       <Text style={{   color:"white",textAlign:"center"}}>
         {label}

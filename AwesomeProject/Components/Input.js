@@ -42,7 +42,6 @@ export default function InputField({
             secureTextEntry={r}
             value={value}
             onChangeText={onChangeText}
-            // variant="rounded"
           />
         ) : (
           <TextInput
@@ -51,7 +50,6 @@ export default function InputField({
             style={styles.StyleInput}
             value={value}
             onChangeText={onChangeText}
-            // variant="rounded"
             
           />
         )}
@@ -63,15 +61,14 @@ export default function InputField({
 }
 const styles = StyleSheet.create({
   StyleInput: {
-    // flex: 1,
-    width: "120%",
-    padding: 15,
-    textAlign: "center",
-   marginLeft:-20,
-    marginBottom: 25,
-    backgroundColor: "#fff",
+    width: '135%',
+    padding: 17,
+    marginBottom: 13,
+    backgroundColor: '#fff',
     borderRadius: 50,
-    borderColor: "#539165",
+    borderColor: 'red',
     borderWidth: 1,
+    textAlign:'center',
+    marginLeft:-40,
   },
 });
