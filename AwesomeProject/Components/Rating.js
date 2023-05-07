@@ -4,8 +4,8 @@ import {FontAwesome} from "@expo/vector-icons";
 import {Text} from 'react-native';
 
 function Rating({value,text}){
-const size=16;
-const color="green";
+    const size=20;
+    const color="orange";
 
 return(
 <HStack space={0.4} mt={1} alignItems="center">

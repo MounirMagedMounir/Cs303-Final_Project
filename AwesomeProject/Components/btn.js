@@ -1,13 +1,13 @@
 import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-export default function Botton({label, onPress}) {
+export default function Botton({label, onPress,color}) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
         width: '80%',
-        backgroundColor: 'red',
+        backgroundColor:color,
         padding: 15,
         borderRadius: 50,
         marginTop: 0,
