@@ -238,7 +238,7 @@ export default function Signup({ navigation }) {
 
             </View>
           </View>
-          <Botton label={"Register"} onPress={handleSignUp} />
+          <Botton label={"Register"} onPress={handleSignUp} color={"red"} />
 
 
           <View style={{ flexDirection: 'row', marginTop: 20 }}>
