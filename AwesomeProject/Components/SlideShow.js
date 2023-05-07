@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { auth, db } from '../firebase'
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -12,9 +13,26 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-export default function SlideShow({ Imgurl, CatName }) {
+import { collection, query, where, getDocs, updateDoc, doc, onSnapshot, orderBy } from "firebase/firestore";
+
+
+export default function SlideShow({ CatName }) {
   const { width: windowWidth } = useWindowDimensions();
   const navigation = useNavigation();
+
+
+  const [data, SetData] = useState([]);
+  const [products, setProducts] = useState([]);
+  useLayoutEffect(()=>{
+    const ref=collection(db,"Products");
+    onSnapshot(ref,(Products)=>
+    SetData(Products.docs.map((Product)=>({
+        id:Product.uid,
+        data:Product.data()
+})))
+    )
+})
+
   return (
     <View >
       <ScrollView>
@@ -39,12 +57,14 @@ export default function SlideShow({ Imgurl, CatName }) {
               showsHorizontalScrollIndicator={false}
               scrollEventThrottle={1}
             >
-              {Imgurl.map((image, imageIndex) => {
-                return (
+              {data.map((item,key)=>(
+             
                   <View>
                     <TouchableOpacity
-                      key={imageIndex}
-                      onPress={() => navigation.navigate("Login")}
+                      key={key}
+                      onPress={() => {
+                        navigation.navigate("ProductDetails", { productId: item.data.uid });
+                      }}
                       style={{
                         height: 230,
                         elevation: 2,
@@ -58,9 +78,9 @@ export default function SlideShow({ Imgurl, CatName }) {
                     >
                       <View
                         style={{ width: windowWidth - 243, height: 200 }}
-                        key={imageIndex}
+                        key={key}
                       >
-                        <Image source={{ uri: image }} style={styles.card} />
+                        <Image source={{uri:item.data.IMG}} style={styles.card} />
 
                         <View
                           style={{
@@ -72,7 +92,7 @@ export default function SlideShow({ Imgurl, CatName }) {
                               fontWeight: "bold",
                             }}
                           >
-                            {CatName}kmimimjkgbhnjuijolooooo
+                           {item.data.name}
                           </Text>
                           <Text
                             style={{
@@ -81,14 +101,13 @@ export default function SlideShow({ Imgurl, CatName }) {
                               paddingTop: 10,
                             }}
                           >
-                            $1000
+                           {item.data.price}$
                           </Text>
                         </View>
                       </View>
                     </TouchableOpacity>
                   </View>
-                );
-              })}
+                ))}
             </ScrollView>
           </View>
         </SafeAreaView>

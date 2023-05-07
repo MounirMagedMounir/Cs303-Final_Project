@@ -12,8 +12,8 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { useState, useEffect } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { useState, useEffect, useLayoutEffect, } from "react";
+import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import SlideShow from "../Components/SlideShow";
@@ -43,6 +43,20 @@ export default function Home({ navigation }) {
 
 
   const [refreshing, setRefreshing] = React.useState(false);
+
+
+  const [data, SetData] = useState([]);
+  const [products, setProducts] = useState([]);
+  
+  useEffect(()=>{
+    const ref=collection(db,"Products");
+    onSnapshot(ref,(Products)=>
+    SetData(Products.docs.map((Product)=>({
+        id:Product.uid,
+        data:Product.data()
+})))
+    )
+})
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -158,21 +172,23 @@ export default function Home({ navigation }) {
               scrollEventThrottle={1}
             >
             
-              {Imgurl.map((image, imageIndex) => {
-                return (
+              {data.map((item,key)=>(
+            
                   <View>         
                    
                     <TouchableOpacity
-                      key={imageIndex}
-                      onPress={() => navigation.navigate("Login")}
+                      key={key}
+                      onPress={() => {
+                        navigation.navigate("ProductDetails", { productId: item.data.uid });
+                      }}
                     >
                       <View
                         style={{ width: windowWidth, height: 250 }}
-                        key={imageIndex}
+                        key={key}
                       >   
            
                         <ImageBackground
-                          source={{ uri: image }}
+                          source={{uri:item.data.IMG}}
                           style={styles.HeaderCard}
                         >
                           
@@ -180,23 +196,23 @@ export default function Home({ navigation }) {
                       </View>
                     </TouchableOpacity>
                   </View>
-                );
-              })}
+               
+               ))}
             </ScrollView>
             <View style={styles.indicatorContainer}>
-              {Imgurl.map((image, imageIndex) => {
+              {data.map((item,key)=>{
                 const width = scrollX.interpolate({
                   inputRange: [
-                    windowWidth * (imageIndex - 1),
-                    windowWidth * imageIndex,
-                    windowWidth * (imageIndex + 1),
+                    windowWidth * (key - 1),
+                    windowWidth * key,
+                    windowWidth * (key + 1),
                   ],
                   outputRange: [8, 16, 8],
                   extrapolate: "clamp",
                 });
                 return (
                   <Animated.View
-                    key={imageIndex}
+                    key={key}
                     style={[styles.normalDot, { width }]}
                   />
                 );
@@ -227,11 +243,11 @@ export default function Home({ navigation }) {
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={1}
               >
-                {Imgurl.map((image, imageIndex) => {
-                  return (
+                {data.map((item,key)=>(
+             
                     <View>
                       <TouchableOpacity
-                        key={imageIndex}
+                        key={key}
                         onPress={() => navigation.navigate("Login")}
                         style={{
                           backgroundColor: "#FFF",
@@ -239,10 +255,10 @@ export default function Home({ navigation }) {
                       >
                         <View
                           style={{ width: windowWidth - 260, height: 120 }}
-                          key={imageIndex}
+                          key={key}
                         >
                           <ImageBackground
-                            source={{ uri: image }}
+                            source={{uri:item.data.IMG}}
                             style={styles.catCard}
                           >
                             <Text
@@ -252,23 +268,22 @@ export default function Home({ navigation }) {
                                 fontWeight: "bold",
                               }}
                             >
-                              {imageIndex}
+                               {item.data.name}
                             </Text>
                           </ImageBackground>
                         </View>
                       </TouchableOpacity>
                     </View>
-                  );
-                })}
+                     ))}
               </ScrollView>
             </View>
           </SafeAreaView>
         </View>
         <View>
-          <SlideShow Imgurl={Imgurl} CatName="Men" />
-          <SlideShow Imgurl={Imgurl} CatName="Women" />
-          <SlideShow Imgurl={Imgurl} CatName="East" />
-          <SlideShow Imgurl={Imgurl} CatName="West" />
+          <SlideShow  CatName="Men" />
+          <SlideShow  CatName="Women" />
+          <SlideShow  CatName="East" />
+          <SlideShow  CatName="West" />
         </View>
       </ScrollView>
     </View>
