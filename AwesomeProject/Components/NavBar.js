@@ -28,6 +28,8 @@ import Profile from '../Screens/Profile';
 import Product from '../Screens/ProductsList';
 import ProductDetails from '../Screens/ProductDetails';
 import { NativeBaseProvider } from "native-base";
+import { CartProvider } from "../CartContext";
+import { CartIcon } from './CartIcon';
 
 const Tab = createBottomTabNavigator();
 
@@ -46,8 +48,11 @@ function NavBar()
   
 
     return (
-      <NavigationContainer>
+    
+     <NavigationContainer>
+      <CartProvider>
         < NativeBaseProvider>
+    
       <Stack.Navigator> 
          <Stack.Screen
            name="Generous"
@@ -55,7 +60,7 @@ function NavBar()
            options={{ headerShown: false }}
          />
 
-         <Stack.Screen name="About" component={About} options={{
+          <Stack.Screen name="About" component={About} options={{
             headerTitle: () => <HeaderAboutLogo />,
             headerStyle: {
               backgroundColor: "#fff",
@@ -66,11 +71,38 @@ function NavBar()
               fontWeight: "bold",
               color: "black",
             },
-          }}/>
+          }}/> 
+          <Stack.Screen name="Register" component={Register} options={{
+            headerTitle: () => <HeaderAboutLogo />,
+            headerStyle: {
+              backgroundColor: "#fff",
+            },
+
+            headerTintColor: "green",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "black",
+            },
+          }}/> 
+          <Stack.Screen name="Login" component={Login} options={{
+            headerTitle: () => <HeaderAboutLogo />,
+            headerStyle: {
+              backgroundColor: "#fff",
+            },
+
+            headerTintColor: "green",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "black",
+            },
+          }}/> 
          <Stack.Screen name="ProductDetails" component={ProductDetails} />
       </Stack.Navigator>
+   
       </NativeBaseProvider>
-    </NavigationContainer>
+   
+      </CartProvider>
+       </NavigationContainer>
     );
 }
 
@@ -90,14 +122,14 @@ onAuthStateChanged(auth, (user) => {
 
   return (
     
-  
+    
     <Tab.Navigator
     initialRouteName={homeName}
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
         let rn = route.name;
-
+let p;
         if (rn === homeName) {
           iconName = focused ? 'home' : 'home-outline';
 
@@ -115,7 +147,7 @@ onAuthStateChanged(auth, (user) => {
             iconName = focused ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline';
         }
         else if (rn === cartName) {
-            iconName = focused ? 'cart' : 'cart-outline';
+          iconName = focused ? 'cart' : 'cart-outline';
         }
         else if (rn === profileName) {
             iconName = focused ? 'person' : 'person-outline';
@@ -127,7 +159,13 @@ onAuthStateChanged(auth, (user) => {
           iconName = focused ? 'grid' : 'grid-outline';
         }
         
-        return <Ionicons name={iconName} size={size} color={color} />;
+        return( 
+        <>
+        <Ionicons name={iconName} size={size} color={color} />
+      {rn === cartName? iconName = focused ? null:<CartIcon />:null}
+       
+        </>
+        )
       },
     })}
     tabBarOptions={{
@@ -174,7 +212,7 @@ onAuthStateChanged(auth, (user) => {
         }}/>
           ) : (
 
-        <Tab.Screen name={loginName} component={Login} options={{
+        <Tab.Screen name={cartName} component={Cart} options={{
           headerTitle: () => <HeaderAboutLogo />,
           headerStyle: {
             // backgroundColor: "gold",
@@ -197,18 +235,20 @@ onAuthStateChanged(auth, (user) => {
             color: "black",
           },
         }}/>
-          ) : (
-        <Tab.Screen name={registerName} component={Register} options={{
-          headerTitle: () => <HeaderAboutLogo />,
-          headerStyle: {
-            // backgroundColor: "gold",
-          },
-          headerTitleStyle: {
-            fontWeight: "bold",
-            color: "black",
-          },
-        }}/>
-        )}
+          ) :null
+          // (
+        // <Tab.Screen name={registerName} component={Register} options={{
+        //   headerTitle: () => <HeaderAboutLogo />,
+        //   headerStyle: {
+        //     // backgroundColor: "gold",
+        //   },
+        //   headerTitleStyle: {
+        //     fontWeight: "bold",
+        //     color: "black",
+        //   },
+        // }}/>
+    // )
+  }
 
     <Tab.Screen name={moreName} component={More} options={{
             headerTitle: () => <HeaderAboutLogo />,
