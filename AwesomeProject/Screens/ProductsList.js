@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { auth, db } from '../firebase'
+
 import {
   View,
   Text,
@@ -15,6 +17,7 @@ import { Box, Center, Flex, Heading, VStack } from "native-base";
 import Rating from "../Components/Rating";
 // import { LinearGradient } from "expo-linear-gradient";
 // import { TouchableOpacity } from "react-native-gesture-handler";
+import { collection, query, where, getDocs, updateDoc, doc, onSnapshot, orderBy } from "firebase/firestore";
 
 export default function ProductsList({ navigation }) {
   // function renderProduct({item: product}){
@@ -47,12 +50,18 @@ export default function ProductsList({ navigation }) {
   //     </Box>;
 
   // }
-
+  const [data, SetData] = useState([]);
   const [products, setProducts] = useState([]);
+  useLayoutEffect(()=>{
+    const ref=collection(db,"Products");
+    onSnapshot(ref,(Products)=>
+    SetData(Products.docs.map((Product)=>({
+        id:Product.uid,
+        data:Product.data()
+})))
+    )
+})
 
-  useEffect(() => {
-    setProducts(getProducts());
-  });
   return (
     // <ScrollView flex={1} marginTop={10} showsVerticalScrollIndicator={false}>
 
@@ -78,28 +87,30 @@ export default function ProductsList({ navigation }) {
         marginLeft={-3}
         marginRight={3}
       >
-        {products.map((product) => (
+       {data.map((item,key)=>(
           <Pressable
-            key={product.id}
+            key={key}
             onPress={() => {
-              navigation.navigate("ProductDetails", { productId: product.id });
+              navigation.navigate("ProductDetails", { productId: item.data.uid });
             }}
             style={{
               height: 250,
               elevation: 2,
               backgroundColor: "#FFF",
               marginLeft: 20,
-              marginTop: 20,
+              marginTop: 15,
               borderRadius: 15,
               marginBottom: 10,
               width: 160,
             }}
           >
-            <Image source={product.assetss} />
+         
+       
+            <Image  source={{uri:item.data.IMG}}  style={{width:"100%",height:"70%",resizeMode:"cover",borderRadius:5,marginTop:0}}/>
             <View
               style={{
                 flexDirection: "row",
-                paddingTop: 10,
+                paddingTop: 15,
                 paddingHorizontal: 10,
               }}
             >
@@ -108,7 +119,7 @@ export default function ProductsList({ navigation }) {
                   fontWeight: "bold",
                 }}
               >
-                {product.name}
+                {item.data.name}
               </Text>
               <Text
                 style={{
@@ -117,11 +128,11 @@ export default function ProductsList({ navigation }) {
                   paddingLeft: 35,
                 }}
               >
-                {product.price}$
+                {item.data.price}$
               </Text>
             </View>
-            <View style={{ marginLeft: 10 }}>
-              <Rating value={product.rating} />
+            <View style={{ marginLeft: 10}}>
+              <Rating value={item.data.rating} />
             </View>
           </Pressable>
         ))}
