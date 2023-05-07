@@ -26,7 +26,7 @@ export default function More({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsLoggedIn(!!user);
+      setIsLoggedIn(user);
     });
 
     return () => unsubscribe();
@@ -42,6 +42,12 @@ export default function More({ navigation }) {
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("About")} style={styles.button}>
         <Text style={styles.buttonText}>About</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Register")} style={styles.button}>
+        <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
       {isLoggedIn && (
