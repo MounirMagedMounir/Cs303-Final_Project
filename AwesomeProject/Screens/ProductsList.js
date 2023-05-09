@@ -29,7 +29,7 @@ import {
 } from "firebase/firestore";
 import { TextInput } from "react-native-paper";
 
-export default function ProductsList({ navigation }) {
+export default function ProductsList({ navigation },searchHome) {
 
   const [data, SetData] = useState([]);
   const [filterStat, setfilterStat] = useState(false);
@@ -73,13 +73,8 @@ export default function ProductsList({ navigation }) {
   return (
    
     <ScrollView flex={1} marginTop={10} showsVerticalScrollIndicator={false}>
-       {/* <TextInput
-          style={{ height: 40 }}
-          placeholder="Filter"
-          onChangeText={(newText) => setSearchText(newText)}
-          defaultValue={searchText}
-        /> */}
 { filteron==true?
+<View style={{  flexDirection: "row",}} >
 <TouchableOpacity  
    onPress={() => setfilteron(false)}>
         <Ionicons  style={{
@@ -93,7 +88,21 @@ export default function ProductsList({ navigation }) {
             }}
             size={50}
             name="close-outline"></Ionicons>
-            </TouchableOpacity>:
+            </TouchableOpacity>
+            
+            <TouchableOpacity  
+   onPress={() => setfilterStat(false)}>
+        <Ionicons  style={{
+              height: 40,
+              marginLeft: 250,
+              marginTop: 9,
+              marginBottom: -10,
+              width: 60,
+              
+            }}
+            size={37}
+            name="refresh-outline"></Ionicons>
+            </TouchableOpacity></View>:
 <TouchableOpacity onPress={() => setfilteron(true)}>
         <Ionicons     
         style={{
@@ -135,20 +144,6 @@ export default function ProductsList({ navigation }) {
        </>
        :null}
       
-        {/* <Button
-
-        title="X"
-        onPress={() => setfilterStat(false)}
-      /> */}
-
-        {/* <TouchableOpacity>
-        <Text style={{ fontSize: 42 }}>
-          {filter
-            .split(" ")
-            .map((word) => word)
-            .join(" ")}
-        </Text>
-        </TouchableOpacity> */}
       <Flex
         flexWrap="wrap"
         direction="row"
