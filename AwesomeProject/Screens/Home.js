@@ -3,7 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,RefreshControl,
+  Button,
+  RefreshControl,
   SafeAreaView,
   ScrollView,
   Animated,
@@ -12,11 +13,18 @@ import {
   ImageBackground,
   Image,
 } from "react-native";
-import { useState, useEffect, useLayoutEffect, } from "react";
-import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
+import { useState, useEffect, useLayoutEffect } from "react";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import SlideShow from "../Components/SlideShow";
+import Headerslide from "../Components/Headerslide";
 
 const Imgurl = [
   "https://images.pexels.com/photos/794494/pexels-photo-794494.jpeg?auto=compress&cs=tinysrgb&w=400",
@@ -41,22 +49,10 @@ export default function Home({ navigation }) {
 
   const [authUser, setAuthUser] = useState(null);
 
-
   const [refreshing, setRefreshing] = React.useState(false);
-
 
   const [data, SetData] = useState([]);
   const [products, setProducts] = useState([]);
-  
-  useEffect(()=>{
-    const ref=collection(db,"Products");
-    onSnapshot(ref,(Products)=>
-    SetData(Products.docs.map((Product)=>({
-        id:Product.uid,
-        data:Product.data()
-})))
-    )
-})
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -65,7 +61,6 @@ export default function Home({ navigation }) {
       setRefreshing(false);
     }, 2000);
   }, []);
-
 
   useEffect(() => {
     getUserData();
@@ -120,174 +115,52 @@ export default function Home({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
-      
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-    <View style={styles.container}>
-      <ScrollView>
+        }
+      >
         <View style={styles.container}>
-          {State == true ? (
-            <View>
-              <Text
-                style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20,marginLeft: 10, }}
-              >
+          <ScrollView>
+            <View style={styles.container}>
+              {State == true ? (
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      fontWeight: "bold",
+                      marginBottom: 20,
+                      marginLeft: 10,
+                    }}
+                  >
                     Hello {UserData?.name}
-              </Text>
+                  </Text>
+                </View>
+              ) : (
+                <View>
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      fontWeight: "bold",
+                      marginBottom: 20,
+                      marginLeft: 15,
+                      marginTop: 10,
+                      color: "#e80405",
+                    }}
+                  >
+                    Hello to M3AE
+                  </Text>
+                </View>
+              )}
             </View>
-          ) : (
+
+            <Headerslide />
             <View>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: "bold",
-                  marginBottom: 20,
-                  marginLeft: 15,
-                  marginTop: 10,
-                  color: "#e80405",
-                }}
-              >
-                Hello to shop
-              </Text>
+              <SlideShow CatName="East" />
+              <SlideShow CatName="West" />
             </View>
-          )}
-        </View>
-
-        <SafeAreaView>
-          <View style={styles.scrollContainer}>
-            
-            <ScrollView
-              horizontal={true}
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              onScroll={Animated.event([
-                {
-                  nativeEvent: {
-                    contentOffset: {
-                      x: scrollX,
-                    },
-                  },
-                },
-              ],null)}
-              scrollEventThrottle={1}
-            >
-            
-              {data.map((item,key)=>(
-            
-                  <View>         
-                   
-                    <TouchableOpacity
-                      key={key}
-                      onPress={() => {
-                        navigation.navigate("ProductDetails", { productId: item.data.uid });
-                      }}
-                    >
-                      <View
-                        style={{ width: windowWidth, height: 250 }}
-                        key={key}
-                      >   
-           
-                        <ImageBackground
-                          source={{uri:item.data.IMG}}
-                          style={styles.HeaderCard}
-                        >
-                          
-                        </ImageBackground>
-                      </View>
-                    </TouchableOpacity>
-                  </View>
-               
-               ))}
-            </ScrollView>
-            <View style={styles.indicatorContainer}>
-              {data.map((item,key)=>{
-                const width = scrollX.interpolate({
-                  inputRange: [
-                    windowWidth * (key - 1),
-                    windowWidth * key,
-                    windowWidth * (key + 1),
-                  ],
-                  outputRange: [8, 16, 8],
-                  extrapolate: "clamp",
-                });
-                return (
-                  <Animated.View
-                    key={key}
-                    style={[styles.normalDot, { width }]}
-                  />
-                );
-              })}
-            </View>
-          </View>
-        </SafeAreaView>
-
-        <View>
-          <SafeAreaView>
-            <View style={{ marginTop: 40, marginBottom: 40 }}>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={styles.scrollHead}>Categories</Text>
-                <TouchableOpacity
-                  style={{
-                    marginLeft: 200,
-                    backgroundColor: "#e80405",
-                    borderRadius: 10,
-                    height: 23,
-                  }}
-                >
-                  <Text style={styles.scrollHeadsee}> More </Text>
-                </TouchableOpacity>
-              </View>
-              <ScrollView
-                horizontal={true}
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={1}
-              >
-                {data.map((item,key)=>(
-             
-                    <View>
-                      <TouchableOpacity
-                        key={key}
-                        onPress={() => navigation.navigate("Login")}
-                        style={{
-                          backgroundColor: "#FFF",
-                        }}
-                      >
-                        <View
-                          style={{ width: windowWidth - 260, height: 120 }}
-                          key={key}
-                        >
-                          <ImageBackground
-                            source={{uri:item.data.IMG}}
-                            style={styles.catCard}
-                          >
-                            <Text
-                              style={{
-                                color: "#e80405",
-                                fontSize: 24,
-                                fontWeight: "bold",
-                              }}
-                            >
-                               {item.data.name}
-                            </Text>
-                          </ImageBackground>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                     ))}
-              </ScrollView>
-            </View>
-          </SafeAreaView>
-        </View>
-        <View>
-          <SlideShow  CatName="Men" />
-          <SlideShow  CatName="Women" />
-          <SlideShow  CatName="East" />
-          <SlideShow  CatName="West" />
+          </ScrollView>
         </View>
       </ScrollView>
-    </View>
-    </ScrollView>
     </SafeAreaView>
   );
 }
@@ -324,7 +197,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
-    
   },
   catCard: {
     flex: 1,
@@ -334,7 +206,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
-    opacity:0.5,
+    opacity: 1,
   },
   card: {
     flex: 1,
