@@ -51,10 +51,10 @@ export default function SlideShow({ CatName }) {
               <Text style={styles.scrollHead}>{CatName}</Text>
               <TouchableOpacity
                 style={{
-                  marginLeft: 250,
+                  marginLeft: 155,
                   backgroundColor: "#e80405",
                   borderRadius: 10,
-                  height: 23,
+                  height: 25,
                   marginTop: 20,
                 }}
               >
@@ -68,7 +68,13 @@ export default function SlideShow({ CatName }) {
               scrollEventThrottle={1}
             >
               {data.map((item, key) => (
-                <View>
+                <View
+                  style={{
+                    marginLeft: -5,
+                    marginRight: 5,
+                    justifyContent: "space-between",
+                  }}
+                >
                   <TouchableOpacity
                     key={key}
                     onPress={() => {
@@ -136,9 +142,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scrollContainer1: {
-    height: 330,
+    height: 320,
     width: 400,
-    marginBottom: 10,
+    marginBottom: 15,
+    marginTop: -15,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -190,8 +197,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontStyle: "italic",
     fontWeight: "bold",
-    marginLeft: 5,
-
+    marginLeft: -5,
+    marginRight: 9,
     letterSpacing: 1,
     padding: 5,
     textDecorationLine: "underline",

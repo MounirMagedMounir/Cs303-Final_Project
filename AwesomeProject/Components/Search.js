@@ -14,6 +14,9 @@ import { db } from "../firebase";
 import { Ionicons } from "@expo/vector-icons";
 import { Card, Avatar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import Entypo from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const Search = () => {
   const navigation = useNavigation();
@@ -25,7 +28,7 @@ const Search = () => {
     try {
       const q = query(
         collection(db, "Products"),
-        where("name", ">=", searchText)
+        where("name", "==", searchText)
       );
       const querySnapshot = await getDocs(q);
 
@@ -56,7 +59,7 @@ const Search = () => {
 
   return (
     <View>
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", marginLeft: 7 }}>
         <TextInput
           style={styles.input}
           placeholder="Search"
@@ -66,8 +69,8 @@ const Search = () => {
         <Ionicons
           name="search"
           size={24}
-          color="black"
-          style={{ marginLeft: 2, marginTop: 5 }}
+          color="#929AAB"
+          style={{ marginLeft: -36, marginRight: 15, marginTop: 8 }}
           onPress={handleSearch}
         />
       </View>
@@ -110,8 +113,8 @@ const styles = StyleSheet.create({
     paddingTop: 50, // Add top padding for the close icon
   },
   input: {
-    width: "67%",
-    height: "105%",
+    width: "75%",
+    height: "115%",
     borderRadius: 50,
     borderWidth: 1,
     borderColor: "red",

@@ -11,9 +11,9 @@ function HeaderAboutLogo() {
         <Image
           style={styles.logo}
           source={require("../assets/IMG-20230501-WA0067.jpg")}
+          resizeMode="contain"
         />
       </TouchableOpacity>
-      <Search />
     </View>
   );
 }
@@ -24,15 +24,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 10,
     backgroundColor: "#FFFFFF",
+    width: "35%",
     height: 50,
     borderBottomWidth: 1,
     borderBottomColor: "#DDDDDD",
-    marginRight: 6,
+    marginRight: -130,
+    //marginLeft: 25,
+    alignItems: "center",
+
+    justifyContent: "center",
   },
   logo: {
     width: 100,
     height: 50,
     resizeMode: "contain",
+    alignItems: "center",
+    marginLeft: 33,
+    justifyContent: "center",
+    backgroundColor: "white",
   },
 });
 
