@@ -25,7 +25,11 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import SlideShow from "../Components/SlideShow";
 import Headerslide from "../Components/Headerslide";
-
+import Search from "../Components/Search";
+import b from "../assets/249.jpg";
+import Entypo from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 const Imgurl = [
   "https://images.pexels.com/photos/794494/pexels-photo-794494.jpeg?auto=compress&cs=tinysrgb&w=400",
   "https://images.pexels.com/photos/906150/pexels-photo-906150.jpeg?auto=compress&cs=tinysrgb&w=400",
@@ -113,55 +117,131 @@ export default function Home({ navigation }) {
   console.log(UserData);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <View style={styles.container}>
-          <ScrollView>
-            <View style={styles.container}>
-              {State == true ? (
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 24,
-                      fontWeight: "bold",
-                      marginBottom: 20,
-                      marginLeft: 10,
-                    }}
-                  >
-                    Hello {UserData?.name}
-                  </Text>
-                </View>
-              ) : (
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 24,
-                      fontWeight: "bold",
-                      marginBottom: 20,
-                      marginLeft: 15,
-                      marginTop: 10,
-                      color: "#e80405",
-                    }}
-                  >
-                    Hello to M3AE
-                  </Text>
-                </View>
-              )}
-            </View>
-
-            <Headerslide />
-            <View>
-              <SlideShow CatName="East" />
-              <SlideShow CatName="West" />
-            </View>
-          </ScrollView>
+    <ImageBackground source={b} style={styles.backgroundImage}>
+      <SafeAreaView style={styles.container}>
+        {/* <View>
+        <Search />
+      </View> */}
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: -5,
+            marginTop: 10,
+          }}
+        >
+          <View style={{ flex: 4, height: 4, backgroundColor: "black" }} />
+          <View>
+            <Text
+              style={{
+                textAlign: "center",
+                paddingHorizontal: 8,
+                fontSize: 23,
+                fontWeight: "bold",
+                fontStyle: "italic",
+                color: "white",
+                backgroundColor: "black",
+                letterSpacing: 1,
+                marginRight: 1,
+                marginLeft: -1,
+              }}
+            >
+              M3AE-SHOP
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 3,
+              height: 2,
+              backgroundColor: "#FF1E00",
+            }}
+          />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <View style={styles.container}>
+            <ScrollView>
+              <View style={styles.container}>
+                {State == true ? (
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 24,
+                        fontWeight: "bold",
+                        marginBottom: 20,
+                        marginLeft: 10,
+                      }}
+                    >
+                      Hello {UserData?.name}
+                    </Text>
+                  </View>
+                ) : (
+                  <View>
+                    {/* <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        marginBottom: -5,
+                        marginTop: 10,
+                      }}
+                    >
+                      <View
+                        style={{ flex: 4, height: 4, backgroundColor: "black" }}
+                      />
+                      <View>
+                        <Text
+                          style={{
+                            textAlign: "center",
+                            paddingHorizontal: 8,
+                            fontSize: 23,
+                            fontWeight: "bold",
+                            fontStyle: "italic",
+                            color: "white",
+                            backgroundColor: "black",
+
+                            marginRight: 1,
+                            marginLeft: -1,
+                          }}
+                        >
+                          M3AE-SHOP
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flex: 3,
+                          height: 2,
+                          backgroundColor: "#FF1E00",
+                        }}
+                      />
+                    </View> */}
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        marginTop: 15,
+                        marginBottom: 15,
+                        padding: 5,
+                        width: "130%",
+                      }}
+                    >
+                      <Search />
+                    </View>
+                  </View>
+                )}
+              </View>
+
+              <Headerslide />
+              <View>
+                <SlideShow CatName="BEST SALING" />
+              </View>
+            </ScrollView>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 
@@ -243,5 +323,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 20,
     letterSpacing: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "stretch",
+    backgroundColor: "red",
+    height: "100%",
+    width: "100%",
   },
 });

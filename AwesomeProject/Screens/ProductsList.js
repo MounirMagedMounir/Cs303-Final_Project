@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { auth, db } from '../firebase'
+import { auth, db } from "../firebase";
 
 import {
   View,
@@ -17,7 +17,17 @@ import { Box, Center, Flex, Heading, VStack } from "native-base";
 import Rating from "../Components/Rating";
 // import { LinearGradient } from "expo-linear-gradient";
 // import { TouchableOpacity } from "react-native-gesture-handler";
-import { collection, query, where, getDocs, updateDoc, doc, onSnapshot, orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+} from "firebase/firestore";
+import Search from "../Components/Search";
 
 export default function ProductsList({ navigation }) {
   // function renderProduct({item: product}){
@@ -52,15 +62,17 @@ export default function ProductsList({ navigation }) {
   // }
   const [data, SetData] = useState([]);
   const [products, setProducts] = useState([]);
-  useLayoutEffect(()=>{
-    const ref=collection(db,"Products");
-    onSnapshot(ref,(Products)=>
-    SetData(Products.docs.map((Product)=>({
-        id:Product.uid,
-        data:Product.data()
-})))
-    )
-})
+  useLayoutEffect(() => {
+    const ref = collection(db, "Products");
+    onSnapshot(ref, (Products) =>
+      SetData(
+        Products.docs.map((Product) => ({
+          id: Product.uid,
+          data: Product.data(),
+        }))
+      )
+    );
+  });
 
   return (
     // <ScrollView flex={1} marginTop={10} showsVerticalScrollIndicator={false}>
@@ -78,7 +90,55 @@ export default function ProductsList({ navigation }) {
     //     </Box>
 
     //    </Pressable>
+
     <ScrollView flex={1} marginTop={10} showsVerticalScrollIndicator={false}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginBottom: -5,
+          marginTop: 10,
+        }}
+      >
+        <View style={{ flex: 4, height: 4, backgroundColor: "black" }} />
+        <View>
+          <Text
+            style={{
+              textAlign: "center",
+              paddingHorizontal: 8,
+              fontSize: 23,
+              fontWeight: "bold",
+              fontStyle: "italic",
+              color: "white",
+              backgroundColor: "black",
+              letterSpacing: 1,
+              marginRight: 1,
+              marginLeft: -1,
+            }}
+          >
+            PROUDUCTS
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 3,
+            height: 2,
+            backgroundColor: "#FF1E00",
+          }}
+        />
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 15,
+          marginBottom: 15,
+          padding: 5,
+          width: "130%",
+        }}
+      >
+        <Search />
+      </View>
       <Flex
         flexWrap="wrap"
         direction="row"
@@ -87,11 +147,13 @@ export default function ProductsList({ navigation }) {
         marginLeft={-3}
         marginRight={3}
       >
-       {data.map((item,key)=>(
+        {data.map((item, key) => (
           <Pressable
             key={key}
             onPress={() => {
-              navigation.navigate("ProductDetails", { productId: item.data.uid });
+              navigation.navigate("ProductDetails", {
+                productId: item.data.uid,
+              });
             }}
             style={{
               height: 250,
@@ -104,9 +166,16 @@ export default function ProductsList({ navigation }) {
               width: 160,
             }}
           >
-         
-       
-            <Image  source={{uri:item.data.IMG}}  style={{width:"100%",height:"70%",resizeMode:"cover",borderRadius:5,marginTop:0}}/>
+            <Image
+              source={{ uri: item.data.IMG }}
+              style={{
+                width: "100%",
+                height: "70%",
+                resizeMode: "cover",
+                borderRadius: 5,
+                marginTop: 0,
+              }}
+            />
             <View
               style={{
                 flexDirection: "row",
@@ -131,7 +200,7 @@ export default function ProductsList({ navigation }) {
                 {item.data.price}$
               </Text>
             </View>
-            <View style={{ marginLeft: 10}}>
+            <View style={{ marginLeft: 10 }}>
               <Rating value={item.data.rating} />
             </View>
           </Pressable>

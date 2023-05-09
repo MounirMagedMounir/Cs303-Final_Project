@@ -21,11 +21,15 @@ import {
   doc,
   orderBy,
 } from "firebase/firestore";
+import { useNavigation } from "@react-navigation/native";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { Pressable } from "native-base";
 import Rating from "../Components/Rating";
 import Botton from "../Components/btn";
+import Entypo from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 TouchableOpacity.defaultProps = { activeOpacity: 0.7 };
 
 export default function ProductDetails({ route }) {
@@ -76,12 +80,29 @@ export default function ProductDetails({ route }) {
   }
   const AppButton = ({ onPress, title, size, backgroundColor }) => (
     <TouchableOpacity onPress={onAddToCart} style={[styles.appButtonContainer]}>
-      <Text style={[styles.appButtonText]}>{title}</Text>
+      <Text style={styles.appButtonText}>
+        {title}
+
+        <MaterialCommunityIcons
+          name="cart"
+          style={{
+            fontSize: 25,
+            color: "wihte",
+            padding: 5,
+            borderWidth: 2,
+            borderRadius: 25,
+            marginLeft: 15,
+            marginRight: -5,
+            borderColor: "black",
+            backgroundColor: "black",
+          }}
+        />
+      </Text>
     </TouchableOpacity>
   );
   return (
     <SafeAreaView>
-      <View style={{ backgroundColor: "#D21312" }}>
+      <View style={{ backgroundColor: "#F9F2ED" }}>
         <View style={styles.imageContainer}>
           <Image source={{ uri: UserData?.IMG }} style={styles.image} />
 
@@ -97,15 +118,16 @@ export default function ProductDetails({ route }) {
             </View> */}
           <Pressable
             style={{
-              height: 200,
+              height: 260,
               elevation: 2,
               backgroundColor: "#fff",
               marginLeft: 0,
               marginTop: 0,
+              marginBottom: 45,
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
               marginBottom: 350,
-              width: 393,
+              width: 395,
             }}
           >
             {/* <View style={styles.imageContainer}> */}
@@ -113,6 +135,7 @@ export default function ProductDetails({ route }) {
             <View
               style={{
                 flexDirection: "row",
+
                 paddingTop: 15,
                 paddingHorizontal: 10,
                 marginBottom: 15,
@@ -128,6 +151,23 @@ export default function ProductDetails({ route }) {
               >
                 {UserData?.name}
               </Text>
+              {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
+                <MaterialCommunityIcons
+                  name="cart"
+                  style={{
+                    fontSize: 23,
+                    color: "rgba(210, 19, 18,0.8)",
+                    padding: 9,
+                    borderRadius: 10,
+                    borderWidth: 1,
+                    marginRight: -5,
+                    marginLeft: 13,
+                    borderColor: "red",
+                    backgroundColor: "white",
+                  }}
+                />
+              </TouchableOpacity> */}
+
               <Text
                 style={{
                   marginTop: 55,
@@ -138,22 +178,13 @@ export default function ProductDetails({ route }) {
                   paddingLeft: 5,
                 }}
               >
-                {UserData?.price} $
+                {UserData?.price}.00 $
               </Text>
             </View>
-            <View style={{ marginLeft: 250, marginTop: -50, marginBottom: 37 }}>
+            <View style={{ marginLeft: 250, marginTop: -40, marginBottom: 25 }}>
               <Rating value={UserData?.rating} />
             </View>
-            <AppButton title="Add to Card" />
-            {/* <Botton
-              label={"Add To Cart"}
-              color={"#rgba(210, 19, 18,0.8)"}
-              onPress={onAddToCart}
-            /> */}
-            {/* <View style={{ marginLeft: 10}}>
-             <Rating value={item.data.rating} />
-            </View> */}
-            {/* </View> */}
+            <AppButton title="Add to Card " />
           </Pressable>
         </View>
       </View>
@@ -166,15 +197,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#D21312 ",
-    marginTop: 113,
+    marginTop: 13,
   },
   image: {
-    width: 700,
-    height: "35%",
+    width: 475,
+    height: "55%",
     // backgroundColor: "#FC2947",
     resizeMode: "contain",
-    marginTop: 30,
-    marginBottom: 105,
+    marginTop: 3,
+    marginBottom: -17,
     padding: 15,
     borderRadius: 35,
     borderColor: "black",
@@ -198,23 +229,27 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   appButtonText: {
-    marginTop: 3,
-    color: "black",
-    size: 100,
-    fontSize: 17,
+    marginTop: -7,
+    marginBottom: 15,
+    color: "white",
+    size: 300,
+    fontSize: 25,
     fontWeight: "bold",
-    height: 27,
+    height: 35,
+    marginRight: 10,
+    marginLeft: -3,
+
     // width: 355,
     letterSpacing: 1,
     textAlign: "center",
   },
   appButtonContainer: {
-    marginTop: 5,
-    padding: 9,
+    marginTop: 27,
+    padding: 20,
     borderWidth: 1,
     borderColor: "black",
-    borderRadius: 20,
-    backgroundColor: "rgba(210, 19, 18,0.8)",
-    marginHorizontal: 17,
+    borderRadius: 23,
+    backgroundColor: "black",
+    marginHorizontal: 1,
   },
 });
