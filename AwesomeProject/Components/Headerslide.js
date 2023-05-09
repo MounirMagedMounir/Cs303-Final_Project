@@ -57,7 +57,7 @@ export default function Headerslide() {
             scrollEventThrottle={1}
           >
             {data.map((item, key) => (
-              <View>
+              <View style={{ justifyContent: "space-around" }}>
                 <TouchableOpacity
                   key={key}
                   onPress={() => {
@@ -66,7 +66,15 @@ export default function Headerslide() {
                     });
                   }}
                 >
-                  <View style={{ width: windowWidth, height: 250 }} key={key}>
+                  <View
+                    style={{
+                      width: windowWidth,
+                      height: 250,
+                      justifyContent: "space-around",
+                      backgroundColor: "Black",
+                    }}
+                    key={key}
+                  >
                     <ImageBackground
                       source={{ uri: item.data.IMG }}
                       style={styles.HeaderCard}
@@ -76,39 +84,23 @@ export default function Headerslide() {
               </View>
             ))}
           </ScrollView>
-          <View style={styles.indicatorContainer}>
-            {/* {data.map((item,key)=>{
-                const width = scrollX.interpolate({
-                  inputRange: [
-                    windowWidth * (key - 1),
-                    windowWidth * key,
-                    windowWidth * (key + 1),
-                  ],
-                  outputRange: [8, 16, 8],
-                  extrapolate: "clamp",
-                });
-                return (
-                  <Animated.View
-                    key={key}
-                    style={[styles.normalDot, { width }]}
-                  />
-                );
-              })} */}
-          </View>
+          <View style={styles.indicatorContainer}></View>
         </View>
       </SafeAreaView>
 
       <View>
         <SafeAreaView>
-          <View style={{ marginTop: 40, marginBottom: 40 }}>
+          <View style={{ marginTop: 35, marginBottom: 40 }}>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.scrollHead}>Categories</Text>
               <TouchableOpacity
                 style={{
                   marginLeft: 200,
+                  marginBottom: -23,
+                  marginTop: 20,
                   backgroundColor: "#e80405",
                   borderRadius: 10,
-                  height: 23,
+                  height: 25,
                 }}
               >
                 <Text style={styles.scrollHeadsee}> More </Text>
@@ -130,7 +122,11 @@ export default function Headerslide() {
                     }}
                   >
                     <View
-                      style={{ width: windowWidth - 260, height: 170 }}
+                      style={{
+                        width: windowWidth - 260,
+                        height: 170,
+                        justifyContent: "space-around",
+                      }}
                       key={key}
                     >
                       <ImageBackground
@@ -140,9 +136,12 @@ export default function Headerslide() {
                       <Text
                         style={{
                           color: "#e80405",
-                          fontSize: 24,
+                          fontSize: 21,
                           fontWeight: "bold",
-                          marginTop: 10,
+                          marginTop: 5,
+                          marginRight: 7,
+                          marginLeft: -3,
+                          textAlign: "center",
                         }}
                       >
                         {item.data.name}
@@ -171,7 +170,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   scrollContainer: {
-    height: 300,
+    height: 270,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -196,10 +195,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 1,
     marginHorizontal: 1,
+    marginRight: 7,
+    marginLeft: -3,
     borderRadius: 5,
     overflow: "hidden",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-around",
     opacity: 1,
   },
   card: {
