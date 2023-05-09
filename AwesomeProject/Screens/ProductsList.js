@@ -1,14 +1,18 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { auth, db } from "../firebase";
+<<<<<<< HEAD
 
+=======
+import Ionicons from "react-native-vector-icons/Ionicons";
+>>>>>>> b0ae783dcd56529ba6fc929b85b23a8bca831e36
 import {
   View,
   Text,
   FlatList,
   StyleSheet,
   ScrollView,
-  Pressable,
-  Image,
+  Pressable,Button,
+  Image,TouchableOpacity
 } from "react-native";
 // import { getProducts } from "../services/ProductsService";
 // import { Product } from "../Components/product";
@@ -27,40 +31,16 @@ import {
   onSnapshot,
   orderBy,
 } from "firebase/firestore";
+<<<<<<< HEAD
 import Search from "../Components/Search";
+=======
+import { TextInput } from "react-native-paper";
+>>>>>>> b0ae783dcd56529ba6fc929b85b23a8bca831e36
 
-export default function ProductsList({ navigation }) {
-  // function renderProduct({item: product}){
-  // return(
-  //     <Product
-  //         {...product}
-  //         onPress={() => {
-  //             navigation.navigate('ProductDetails', {productId: product.id})
-  //         }}
-  //     />
-  // )
-  // return <Box flex="1" safeAreaTop>
-  // <ScrollView>
-  //   <VStack space={2.5} w="100%" px="3">
-  // <Flex direction="row" mb="2.5" mt="1.5">
-  // <Center size="16" bg="primary.100" _text={{
-  // color: "coolGray.800"
-  // }}>
-  //   {product.name}
-  // </Center>
-  // <Center size="16" bg="primary.100" _text={{
-  // color: "coolGray.800"
-  // }}>
-  //   {product.name}
-  // </Center>
+export default function ProductsList({ navigation },searchHome) {
 
-  // </Flex>
-  //         </VStack>
-  //       </ScrollView>
-  //     </Box>;
-
-  // }
   const [data, SetData] = useState([]);
+<<<<<<< HEAD
   const [products, setProducts] = useState([]);
   useLayoutEffect(() => {
     const ref = collection(db, "Products");
@@ -73,8 +53,48 @@ export default function ProductsList({ navigation }) {
       )
     );
   });
+=======
+  const [filterStat, setfilterStat] = useState(false);
+  const [filteron, setfilteron] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+ 
+  const handleSearch = async (searchText) => {
+    try {
+      const q = query(collection(db, 'Products'), where('category', '==', searchText));
+      const querySnapshot = await getDocs(q);
+>>>>>>> b0ae783dcd56529ba6fc929b85b23a8bca831e36
 
+      const results = querySnapshot.docs.map((Product) => ({
+        id: Product.uid,
+        data: Product.data(),
+      }));
+      setfilterStat(true);
+      setSearchResults(results);
+      console.log(results);
+      console.log(data);
+    } catch (error) {
+      console.error('Error searching products:', error);
+    }
+  };
+
+
+  useLayoutEffect(() => {
+    
+    const ref = collection(db, "Products");
+    onSnapshot(ref, (Products) =>
+      SetData(
+        Products.docs.map((Product) => ({
+          id: Product.uid,
+          data: Product.data(),
+        }))
+      )
+    );
+  });
+
+
+ 
   return (
+<<<<<<< HEAD
     // <ScrollView flex={1} marginTop={10} showsVerticalScrollIndicator={false}>
 
     //     <Flex flexWrap="wrap" direction="row" justifyContent="space-between" px={6}>
@@ -139,6 +159,81 @@ export default function ProductsList({ navigation }) {
       >
         <Search />
       </View>
+=======
+   
+    <ScrollView flex={1} marginTop={10} showsVerticalScrollIndicator={false}>
+{ filteron==true?
+<View style={{  flexDirection: "row",}} >
+<TouchableOpacity  
+   onPress={() => setfilteron(false)}>
+        <Ionicons  style={{
+              height: 40,
+          
+              marginLeft: 20,
+              marginTop: 2,
+              marginBottom: 10,
+              width: 60,
+              
+            }}
+            size={50}
+            name="close-outline"></Ionicons>
+            </TouchableOpacity>
+            
+            <TouchableOpacity  
+   onPress={() => setfilterStat(false)}>
+        <Ionicons  style={{
+              height: 40,
+              marginLeft: 250,
+              marginTop: 9,
+              marginBottom: -10,
+              width: 60,
+              
+            }}
+            size={37}
+            name="refresh-outline"></Ionicons>
+            </TouchableOpacity></View>:
+<TouchableOpacity onPress={() => setfilteron(true)}>
+        <Ionicons     
+        style={{
+              height: 42,
+          
+              marginLeft: 20,
+              marginTop: 2,
+              marginBottom: 10,
+              width: 60,
+              
+            }}
+            size={47}
+            name="options-outline"></Ionicons>
+            </TouchableOpacity>
+
+}
+             {filteron==true? <>
+            
+
+
+<View style={{  flexDirection: "row",}}>
+{data.map((item, key) => (
+          
+          <TouchableOpacity style={{ 
+            backgroundColor: "#FFFFFF",
+          borderRadius: 50,
+          borderWidth: 1,
+          borderColor: "#000000",
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          marginVertical: 10,}}
+          onPress={() => handleSearch(item.data.category)}
+          >
+         <Text>{item.data.category}</Text>  
+          
+           </TouchableOpacity>
+        ))}
+       </View>
+       </>
+       :null}
+      
+>>>>>>> b0ae783dcd56529ba6fc929b85b23a8bca831e36
       <Flex
         flexWrap="wrap"
         direction="row"
@@ -147,6 +242,85 @@ export default function ProductsList({ navigation }) {
         marginLeft={-3}
         marginRight={3}
       >
+<<<<<<< HEAD
+        {data.map((item, key) => (
+=======
+       {filterStat==true? 
+       <>
+       {searchResults.map((item, key) => (
+>>>>>>> b0ae783dcd56529ba6fc929b85b23a8bca831e36
+          <Pressable
+          style={{
+            height: 250,
+            elevation: 2,
+            backgroundColor: "#FFF",
+            marginLeft: 20,
+            marginTop: 15,
+            borderRadius: 15,
+            marginBottom: 10,
+            width: 160,
+          }}
+            key={key}
+            onPress={() => {
+              navigation.navigate("ProductDetails", {
+                productId: item.data.uid,
+              });
+<<<<<<< HEAD
+            }}
+            style={{
+              height: 250,
+              elevation: 2,
+              backgroundColor: "#FFF",
+              marginLeft: 20,
+              marginTop: 15,
+              borderRadius: 15,
+              marginBottom: 10,
+              width: 160,
+=======
+>>>>>>> b0ae783dcd56529ba6fc929b85b23a8bca831e36
+            }}
+        
+          >
+            <Image
+              source={{ uri: item.data.IMG }}
+              style={{
+                width: "100%",
+                height: "70%",
+                resizeMode: "cover",
+                borderRadius: 5,
+                marginTop: 0,
+              }}
+            />
+            <View
+              style={{
+                flexDirection: "row",
+                paddingTop: 15,
+                paddingHorizontal: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                {item.data.name}
+              </Text>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: "#00a46c",
+                  paddingLeft: 35,
+                }}
+              >
+                {item.data.price}$
+              </Text>
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Rating value={item.data.rating} />
+            </View>
+          </Pressable>
+        ))}
+        </>:<>
         {data.map((item, key) => (
           <Pressable
             key={key}
@@ -204,7 +378,7 @@ export default function ProductsList({ navigation }) {
               <Rating value={item.data.rating} />
             </View>
           </Pressable>
-        ))}
+        ))}</>}
       </Flex>
     </ScrollView>
   );
