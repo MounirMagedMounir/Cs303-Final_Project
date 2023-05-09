@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { auth, db } from '../firebase'
+import { auth, db } from "../firebase";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
@@ -13,28 +13,37 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { collection, query, where, getDocs, updateDoc, doc, onSnapshot, orderBy } from "firebase/firestore";
-
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+} from "firebase/firestore";
 
 export default function SlideShow({ CatName }) {
   const { width: windowWidth } = useWindowDimensions();
   const navigation = useNavigation();
 
-
   const [data, SetData] = useState([]);
   const [products, setProducts] = useState([]);
-  useLayoutEffect(()=>{
-    const ref=collection(db,"Products");
-    onSnapshot(ref,(Products)=>
-    SetData(Products.docs.map((Product)=>({
-        id:Product.uid,
-        data:Product.data()
-})))
-    )
-})
+  useLayoutEffect(() => {
+    const ref = collection(db, "Products");
+    onSnapshot(ref, (Products) =>
+      SetData(
+        Products.docs.map((Product) => ({
+          id: Product.uid,
+          data: Product.data(),
+        }))
+      )
+    );
+  });
 
   return (
-    <View >
+    <View>
       <ScrollView>
         <SafeAreaView>
           <View style={styles.scrollContainer1}>
@@ -46,6 +55,7 @@ export default function SlideShow({ CatName }) {
                   backgroundColor: "#e80405",
                   borderRadius: 10,
                   height: 23,
+                  marginTop: 20,
                 }}
               >
                 <Text style={styles.scrollHeadsee}> More </Text>
@@ -57,57 +67,61 @@ export default function SlideShow({ CatName }) {
               showsHorizontalScrollIndicator={false}
               scrollEventThrottle={1}
             >
-              {data.map((item,key)=>(
-             
-                  <View>
-                    <TouchableOpacity
+              {data.map((item, key) => (
+                <View>
+                  <TouchableOpacity
+                    key={key}
+                    onPress={() => {
+                      navigation.navigate("ProductDetails", {
+                        productId: item.data.uid,
+                      });
+                    }}
+                    style={{
+                      height: 230,
+                      elevation: 2,
+                      backgroundColor: "#FFF",
+                      marginLeft: 20,
+                      marginTop: 10,
+                      borderRadius: 15,
+                      marginBottom: 10,
+                      width: 160,
+                    }}
+                  >
+                    <View
+                      style={{ width: windowWidth - 225, height: 200 }}
                       key={key}
-                      onPress={() => {
-                        navigation.navigate("ProductDetails", { productId: item.data.uid });
-                      }}
-                      style={{
-                        height: 230,
-                        elevation: 2,
-                        backgroundColor: "#FFF",
-                        marginLeft: 20,
-                        marginTop: 10,
-                        borderRadius: 15,
-                        marginBottom: 10,
-                        width: 160,
-                      }}
                     >
-                      <View
-                        style={{ width: windowWidth - 243, height: 200 }}
-                        key={key}
-                      >
-                        <Image source={{uri:item.data.IMG}} style={styles.card} />
+                      <Image
+                        source={{ uri: item.data.IMG }}
+                        style={styles.card}
+                      />
 
-                        <View
+                      <View
+                        style={{
+                          paddingHorizontal: 10,
+                        }}
+                      >
+                        <Text
                           style={{
-                            paddingHorizontal: 10,
+                            fontWeight: "bold",
                           }}
                         >
-                          <Text
-                            style={{
-                              fontWeight: "bold",
-                            }}
-                          >
-                           {item.data.name}
-                          </Text>
-                          <Text
-                            style={{
-                              fontWeight: "bold",
-                              color: "#e80405",
-                              paddingTop: 10,
-                            }}
-                          >
-                           {item.data.price}$
-                          </Text>
-                        </View>
+                          {item.data.name}
+                        </Text>
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                            color: "#e80405",
+                            paddingTop: 10,
+                          }}
+                        >
+                          {item.data.price}$
+                        </Text>
                       </View>
-                    </TouchableOpacity>
-                  </View>
-                ))}
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              ))}
             </ScrollView>
           </View>
         </SafeAreaView>
@@ -144,7 +158,9 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginTop: 1,
     marginHorizontal: 10,
-    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "rgba(210, 19, 18,0.8)",
+    borderRadius: 7,
     overflow: "hidden",
     alignItems: "center",
     justifyContent: "center",
@@ -170,10 +186,17 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   scrollHead: {
-    color: "#000",
+    color: "white",
     fontSize: 24,
+    fontStyle: "italic",
     fontWeight: "bold",
-    marginLeft: 20,
+    marginLeft: 5,
+
     letterSpacing: 1,
+    padding: 5,
+    textDecorationLine: "underline",
+    // borderWidth: 1,
+    borderRadius: 15,
+    backgroundColor: "#e80405",
   },
 });
