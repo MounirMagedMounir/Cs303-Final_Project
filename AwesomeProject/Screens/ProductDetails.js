@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
-// import { getProduct } from '../services/ProductsService';
+
 import { CartContext } from "../CartContext";
 import {
   collection,
@@ -21,6 +21,7 @@ import {
   doc,
   orderBy,
 } from "firebase/firestore";
+
 import { useNavigation } from "@react-navigation/native";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -37,7 +38,7 @@ export default function ProductDetails({ route }) {
   console.log("heloow:" + productId);
   const { addItemToCart, getItemsCount, items } = useContext(CartContext);
   const [UserData, SetUserData] = useState(null);
-  // const[authUser,setAuthUser]=useState(null);
+
   const userr = auth.currentUser;
   useEffect(() => {
     getUserData();
@@ -106,16 +107,6 @@ export default function ProductDetails({ route }) {
         <View style={styles.imageContainer}>
           <Image source={{ uri: UserData?.IMG }} style={styles.image} />
 
-          {/*
-          
-            <View style={styles.infoContainer}>
-                <Text style={styles.name}>{UserData?.name}</Text>
-                <Text style={styles.price}>$ {UserData?.price}</Text>
-                <Text style={styles.description}>{UserData?.description}</Text>
-          
-            <Button onPress={onAddToCart} style={{backgroundColor:"#00a46c"}} title="Add To Cart" />
-       
-            </View> */}
           <Pressable
             style={{
               height: 260,
@@ -130,8 +121,6 @@ export default function ProductDetails({ route }) {
               width: 395,
             }}
           >
-            {/* <View style={styles.imageContainer}> */}
-            {/* <Image  source={{uri:UserData?.IMG}}  style={{width:"100%",height:"70%",resizeMode:"cover",borderRadius:5,marginTop:0}}/> */}
             <View
               style={{
                 flexDirection: "row",
@@ -151,22 +140,6 @@ export default function ProductDetails({ route }) {
               >
                 {UserData?.name}
               </Text>
-              {/* <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
-                <MaterialCommunityIcons
-                  name="cart"
-                  style={{
-                    fontSize: 23,
-                    color: "rgba(210, 19, 18,0.8)",
-                    padding: 9,
-                    borderRadius: 10,
-                    borderWidth: 1,
-                    marginRight: -5,
-                    marginLeft: 13,
-                    borderColor: "red",
-                    backgroundColor: "white",
-                  }}
-                />
-              </TouchableOpacity> */}
 
               <Text
                 style={{
@@ -202,7 +175,7 @@ const styles = StyleSheet.create({
   image: {
     width: 475,
     height: "55%",
-    // backgroundColor: "#FC2947",
+
     resizeMode: "contain",
     marginTop: 3,
     marginBottom: -17,

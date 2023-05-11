@@ -10,7 +10,7 @@ function HeaderAboutLogo() {
       <TouchableOpacity onPress={() => navigation.navigate("Home")}>
         <Image
           style={styles.logo}
-          source={require("../assets/IMG-20230501-WA0067.jpg")}
+          source={require("../assets/IMG-20230501-WA0067.jpg.png")}
           resizeMode="contain"
         />
       </TouchableOpacity>
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#DDDDDD",
     marginRight: -130,
-    //marginLeft: 25,
     alignItems: "center",
 
     justifyContent: "center",

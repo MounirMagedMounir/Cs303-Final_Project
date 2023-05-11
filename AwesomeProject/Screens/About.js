@@ -89,10 +89,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "lightgray",
     color: "red",
-    // resizeMode: "center",
   },
   headline2: {
-    //marginHorizontal: 35,
     borderWidth: 3,
     borderColor: "darkred",
 

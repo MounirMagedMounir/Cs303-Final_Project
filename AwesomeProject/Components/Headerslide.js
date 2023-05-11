@@ -3,17 +3,14 @@ import {
   StyleSheet,
   Text,
   View,
-  Button,
-  RefreshControl,
   SafeAreaView,
   ScrollView,
   Animated,
   useWindowDimensions,
   TouchableOpacity,
   ImageBackground,
-  Image,
 } from "react-native";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useLayoutEffect } from "react";
 import {
   collection,
   query,
@@ -21,9 +18,9 @@ import {
   getDocs,
   onSnapshot,
 } from "firebase/firestore";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+
 import { auth, db } from "../firebase";
-import SlideShow from "../Components/SlideShow";
+
 import { useNavigation } from "@react-navigation/native";
 
 export default function Headerslide() {
@@ -32,7 +29,33 @@ export default function Headerslide() {
   const userr = auth.currentUser;
   const { width: windowWidth } = useWindowDimensions();
   const [data, SetData] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [filterStat, setfilterStat] = useState(false);
+  const [filteron, setfilteron] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+
+  if (filteron == false) {
+    const x = async (searchText) => {
+      try {
+        const q = query(
+          collection(db, "Products"),
+          where("category", "==", searchText)
+        );
+        const querySnapshot = await getDocs(q);
+
+        const results = querySnapshot.docs.map((Product) => ({
+          id: Product.uid,
+          data: Product.data(),
+        }));
+        setfilterStat(true);
+        setSearchResults(results);
+        console.log(results);
+        console.log(data);
+      } catch (error) {
+        console.error("Error searching products:", error);
+      }
+    };
+  }
+
   useLayoutEffect(() => {
     const ref = collection(db, "Products");
     onSnapshot(ref, (Products) =>
@@ -49,13 +72,7 @@ export default function Headerslide() {
     <View>
       <SafeAreaView>
         <View style={styles.scrollContainer}>
-          <ScrollView
-            horizontal={true}
-            pagingEnabled
-            // showsHorizontalScrollIndicator={false}
-
-            scrollEventThrottle={1}
-          >
+          <ScrollView horizontal={true} pagingEnabled scrollEventThrottle={1}>
             {data.map((item, key) => (
               <View style={{ justifyContent: "space-around" }}>
                 <TouchableOpacity
@@ -102,6 +119,7 @@ export default function Headerslide() {
                   borderRadius: 10,
                   height: 25,
                 }}
+                onPress={() => navigation.navigate("ProductsList")}
               >
                 <Text style={styles.scrollHeadsee}> More </Text>
               </TouchableOpacity>
@@ -116,7 +134,7 @@ export default function Headerslide() {
                 <View>
                   <TouchableOpacity
                     key={key}
-                    onPress={() => navigation.navigate("Login")}
+                    onPress={() => navigation.navigate("ProductsList")}
                     style={{
                       backgroundColor: "#FFF",
                     }}
@@ -144,7 +162,7 @@ export default function Headerslide() {
                           textAlign: "center",
                         }}
                       >
-                        {item.data.name}
+                        {item.data.category}
                       </Text>
                     </View>
                   </TouchableOpacity>

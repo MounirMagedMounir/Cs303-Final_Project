@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -7,13 +7,9 @@ import {
   RefreshControl,
   SafeAreaView,
   ScrollView,
-  Animated,
-  useWindowDimensions,
-  TouchableOpacity,
   ImageBackground,
-  Image,
 } from "react-native";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   collection,
   query,
@@ -21,32 +17,14 @@ import {
   getDocs,
   onSnapshot,
 } from "firebase/firestore";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase";
 import SlideShow from "../Components/SlideShow";
 import Headerslide from "../Components/Headerslide";
 import Search from "../Components/Search";
 import b from "../assets/249.jpg";
-import Entypo from "react-native-vector-icons/Entypo";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-const Imgurl = [
-  "https://images.pexels.com/photos/794494/pexels-photo-794494.jpeg?auto=compress&cs=tinysrgb&w=400",
-  "https://images.pexels.com/photos/906150/pexels-photo-906150.jpeg?auto=compress&cs=tinysrgb&w=400",
-  "https://images.pexels.com/photos/593655/pexels-photo-593655.jpeg?auto=compress&cs=tinysrgb&w=400",
-  "https://images.pexels.com/photos/4482677/pexels-photo-4482677.jpeg?auto=compress&cs=tinysrgb&w=400",
-  "https://images.pexels.com/photos/133472/pexels-photo-133472.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  "https://images.pexels.com/photos/39574/flower-exotic-colorful-pink-39574.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  "https://images.pexels.com/photos/668465/pexels-photo-668465.jpeg?auto=compress&cs=tinysrgb&w=1600",
-
-  "https://images.pexels.com/photos/639086/pexels-photo-639086.jpeg?auto=compress&cs=tinysrgb&w=1600",
-];
 
 export default function Home({ navigation }) {
-  const scrollX = useRef(new Animated.Value(0)).current;
-  const userr = auth.currentUser;
-  const { width: windowWidth } = useWindowDimensions();
-
   const [State, setState] = useState(false);
 
   const [UserData, SetUserData] = useState(null);
@@ -54,9 +32,6 @@ export default function Home({ navigation }) {
   const [authUser, setAuthUser] = useState(null);
 
   const [refreshing, setRefreshing] = React.useState(false);
-
-  const [data, SetData] = useState([]);
-  const [products, setProducts] = useState([]);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -108,7 +83,6 @@ export default function Home({ navigation }) {
     );
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
       SetUserData(doc.data());
     });
@@ -119,9 +93,6 @@ export default function Home({ navigation }) {
   return (
     <ImageBackground source={b} style={styles.backgroundImage}>
       <SafeAreaView style={styles.container}>
-        {/* <View>
-        <Search />
-      </View> */}
         <View
           style={{
             flexDirection: "row",
@@ -173,6 +144,7 @@ export default function Home({ navigation }) {
                         fontWeight: "bold",
                         marginBottom: 20,
                         marginLeft: 10,
+                        marginTop: 10,
                       }}
                     >
                       Hello {UserData?.name}
@@ -180,43 +152,6 @@ export default function Home({ navigation }) {
                   </View>
                 ) : (
                   <View>
-                    {/* <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        marginBottom: -5,
-                        marginTop: 10,
-                      }}
-                    >
-                      <View
-                        style={{ flex: 4, height: 4, backgroundColor: "black" }}
-                      />
-                      <View>
-                        <Text
-                          style={{
-                            textAlign: "center",
-                            paddingHorizontal: 8,
-                            fontSize: 23,
-                            fontWeight: "bold",
-                            fontStyle: "italic",
-                            color: "white",
-                            backgroundColor: "black",
-
-                            marginRight: 1,
-                            marginLeft: -1,
-                          }}
-                        >
-                          M3AE-SHOP
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          flex: 3,
-                          height: 2,
-                          backgroundColor: "#FF1E00",
-                        }}
-                      />
-                    </View> */}
                     <View
                       style={{
                         flexDirection: "row",
@@ -226,16 +161,15 @@ export default function Home({ navigation }) {
                         padding: 5,
                         width: "130%",
                       }}
-                    >
-                      <Search />
-                    </View>
+                    ></View>
                   </View>
                 )}
+                <Search />
               </View>
 
               <Headerslide />
               <View>
-                <SlideShow CatName="BEST SALING" />
+                <SlideShow CatName="men" />
               </View>
             </ScrollView>
           </View>

@@ -1,32 +1,28 @@
-import * as React from 'react';
+import * as React from "react";
 import { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth ,db } from "../firebase";
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity,
-    Alert,
-} from "react-native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { auth, db } from "../firebase";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import About from "../Screens/About";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from '@react-navigation/native';
-
+import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function More({ navigation }) {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsLoggedIn(user);
+      if (user) {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
     });
 
     return () => unsubscribe();
@@ -34,25 +30,44 @@ export default function More({ navigation }) {
 
   const handleLogout = () => {
     signOut(auth)
-      .then(() => {})
+      .then(() => {
+        setIsLoggedIn(true);
+      })
       .catch((error) => {});
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate("About")} style={styles.button}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("About")}
+        style={styles.button}
+      >
         <Text style={styles.buttonText}>About</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Register")} style={styles.button}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.button}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
 
-      {isLoggedIn && (
-        <TouchableOpacity onPress={handleLogout} style={[styles.button, styles.logoutButton]}>
-          <Text style={[styles.buttonText, styles.logoutButtonText]}>Logout</Text>
+      {isLoggedIn == true ? (
+        <>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Register")}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+        </>
+      ) : (
+        <TouchableOpacity
+          onPress={handleLogout}
+          style={[styles.button, styles.logoutButton]}
+        >
+          <Text style={[styles.buttonText, styles.logoutButtonText]}>
+            Logout
+          </Text>
         </TouchableOpacity>
       )}
     </View>

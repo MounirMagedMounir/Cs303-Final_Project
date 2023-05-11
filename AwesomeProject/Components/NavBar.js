@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -6,13 +6,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { auth } from "../firebase";
-import { useState, useEffect } from "react";
-import { View } from "react-native";
+import { useState } from "react";
 import HeaderAboutLogo from "../Components/HeaderLogo";
 
 const Stack = createNativeStackNavigator();
 
-//screens import
 import Home from "../Screens/Home";
 import Login from "../Screens/Login";
 import Register from "../Screens/Register";
@@ -131,11 +129,7 @@ function Morefun() {
             iconName = focused ? "log-in" : "log-in-outline";
           } else if (rn === registerName) {
             iconName = focused ? "person-add" : "person-add-outline";
-          }
-          // else if (rn === aboutName) {
-          //     iconName = focused ? 'information-circle' : 'information-circle-outline';
-          // }
-          else if (rn === moreName) {
+          } else if (rn === moreName) {
             iconName = focused
               ? "ellipsis-horizontal"
               : "ellipsis-horizontal-outline";
@@ -158,7 +152,6 @@ function Morefun() {
         },
       })}
       tabBarOptions={{
-        // hex code for red color
         activeTintColor: "#ff0000",
         inactiveTintColor: "grey",
         labelStyle: { paddingBottom: 10, fontSize: 10 },
@@ -170,9 +163,7 @@ function Morefun() {
         component={Home}
         options={{
           headerTitle: () => <HeaderAboutLogo />,
-          headerStyle: {
-            // backgroundColor: "gold",
-          },
+          headerStyle: {},
           headerTitleStyle: {
             fontWeight: "bold",
             color: "black",
@@ -184,9 +175,7 @@ function Morefun() {
         component={Product}
         options={{
           headerTitle: () => <HeaderAboutLogo />,
-          headerStyle: {
-            // backgroundColor: "gold",
-          },
+          headerStyle: {},
           headerTitleStyle: {
             fontWeight: "bold",
             color: "black",
@@ -200,9 +189,7 @@ function Morefun() {
           component={Profile}
           options={{
             headerTitle: () => <HeaderAboutLogo />,
-            headerStyle: {
-              // backgroundColor: "gold",
-            },
+            headerStyle: {},
             headerTitleStyle: {
               fontWeight: "bold",
               color: "black",
@@ -215,9 +202,7 @@ function Morefun() {
           component={Cart}
           options={{
             headerTitle: () => <HeaderAboutLogo />,
-            headerStyle: {
-              // backgroundColor: "gold",
-            },
+            headerStyle: {},
             headerTitleStyle: {
               fontWeight: "bold",
               color: "black",
@@ -226,36 +211,20 @@ function Morefun() {
         />
       )}
 
-      {
-        State == true ? (
-          <Tab.Screen
-            name={cartName}
-            component={Cart}
-            options={{
-              headerTitle: () => <HeaderAboutLogo />,
-              headerStyle: {
-                // backgroundColor: "gold",
-              },
-              headerTitleStyle: {
-                fontWeight: "bold",
-                color: "black",
-              },
-            }}
-          />
-        ) : null
-        // (
-        // <Tab.Screen name={registerName} component={Register} options={{
-        //   headerTitle: () => <HeaderAboutLogo />,
-        //   headerStyle: {
-        //     // backgroundColor: "gold",
-        //   },
-        //   headerTitleStyle: {
-        //     fontWeight: "bold",
-        //     color: "black",
-        //   },
-        // }}/>
-        // )
-      }
+      {State == true ? (
+        <Tab.Screen
+          name={cartName}
+          component={Cart}
+          options={{
+            headerTitle: () => <HeaderAboutLogo />,
+            headerStyle: {},
+            headerTitleStyle: {
+              fontWeight: "bold",
+              color: "black",
+            },
+          }}
+        />
+      ) : null}
 
       <Tab.Screen
         name={moreName}

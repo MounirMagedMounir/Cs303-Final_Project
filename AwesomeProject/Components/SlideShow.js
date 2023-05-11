@@ -1,6 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { auth, db } from "../firebase";
-import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { db } from "../firebase";
+
 import {
   StyleSheet,
   Text,
@@ -9,38 +9,41 @@ import {
   ScrollView,
   useWindowDimensions,
   TouchableOpacity,
-  ImageBackground,
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  updateDoc,
-  doc,
-  onSnapshot,
-  orderBy,
-} from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 export default function SlideShow({ CatName }) {
   const { width: windowWidth } = useWindowDimensions();
   const navigation = useNavigation();
 
   const [data, SetData] = useState([]);
-  const [products, setProducts] = useState([]);
-  useLayoutEffect(() => {
-    const ref = collection(db, "Products");
-    onSnapshot(ref, (Products) =>
-      SetData(
-        Products.docs.map((Product) => ({
+  const [filterStat, setfilterStat] = useState(false);
+  const [filteron, setfilteron] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+
+  if (filteron == false) {
+    const x = async () => {
+      try {
+        const q = query(
+          collection(db, "Products"),
+          where("category", "==", CatName)
+        );
+        const querySnapshot = await getDocs(q);
+        const results = querySnapshot.docs.map((Product) => ({
           id: Product.uid,
           data: Product.data(),
-        }))
-      )
-    );
-  });
+        }));
+        setfilteron(true);
+        setSearchResults(results);
+        console.log(results);
+      } catch (error) {
+        console.error("Error searching products:", error);
+      }
+    };
+    x();
+  }
 
   return (
     <View>
@@ -48,7 +51,7 @@ export default function SlideShow({ CatName }) {
         <SafeAreaView>
           <View style={styles.scrollContainer1}>
             <View style={{ flexDirection: "row", marginTop: 40 }}>
-              <Text style={styles.scrollHead}>{CatName}</Text>
+              <Text style={styles.scrollHead}>Best Selling</Text>
               <TouchableOpacity
                 style={{
                   marginLeft: 155,
@@ -57,6 +60,7 @@ export default function SlideShow({ CatName }) {
                   height: 25,
                   marginTop: 20,
                 }}
+                onPress={() => navigation.navigate("ProductsList")}
               >
                 <Text style={styles.scrollHeadsee}> More </Text>
               </TouchableOpacity>
@@ -67,7 +71,7 @@ export default function SlideShow({ CatName }) {
               showsHorizontalScrollIndicator={false}
               scrollEventThrottle={1}
             >
-              {data.map((item, key) => (
+              {searchResults.map((item, key) => (
                 <View
                   style={{
                     marginLeft: -5,

@@ -10,17 +10,14 @@ import {
   Modal,
 } from "react-native";
 import { CartContext } from "../CartContext";
-// import {getProduct} from "../data/product"
-import { TouchableOpacity } from "react-native-gesture-handler";
+
 import { Button } from "native-base";
-// import {CartEmpty} from "../Components/CartEmpty"
+
 import { FontAwesome } from "@expo/vector-icons";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 export default function Cart({ navigation }) {
-  // const {productId} = route.params;
-  // const [product, setProduct] = useState({});
   const {
     items,
     deleteItemToCart,
@@ -29,15 +26,9 @@ export default function Cart({ navigation }) {
     getItemsCount,
   } = useContext(CartContext);
 
-  // useEffect(() => {
-  //     setProduct(getProduct(productId))
-  // })
   const [product, setProduct] = useState({});
 
   let [it, setIt] = useState([]);
-
-  // console.log(items);
-  // console.log(items[1]["qty"]);
 
   let [total, setTotal] = useState(0);
   let [flag, setflag] = useState(false);
@@ -104,17 +95,12 @@ export default function Cart({ navigation }) {
         { text: "OK" },
       ]);
     } else {
-      if (product === null) {
-        await setDoc(doc(db, "UserBuy", auth.currentUser.uid), {
-          cart: product,
-        });
-        Alert.alert("Success");
-      } else {
-        await updateDoc(doc(db, "UserBuy", auth.currentUser.uid), {
-          cart: product,
-        });
-        Alert.alert("Success");
-      }
+      await addDoc(collection(db, "UserBuy"), {
+        id: auth.currentUser.uid,
+        cart: product,
+      });
+      Alert.alert("Success");
+
       setflag(false);
     }
   };
@@ -165,16 +151,12 @@ export default function Cart({ navigation }) {
                   </Button>
                 </>
               )}
-              {/* <Button  style={styles.button2} onPress={()=>{Buy()}} >Buy</Button> */}
             </View>
           </>
         ) : (
           <View style={{ marginLeft: "40%", marginVertical: "65%" }}>
-            <FontAwesome name="shopping-basket" size={100} color={"#4c7cff"} />
-            <Text
-              color={"#539165"}
-              style={{ marginLeft: 15, fontWeight: "bold" }}
-            >
+            <FontAwesome name="shopping-basket" size={100} color={"red"} />
+            <Text color={"red"} style={{ marginLeft: 15, fontWeight: "bold" }}>
               Cart is Empty
             </Text>
           </View>
@@ -235,21 +217,6 @@ export default function Cart({ navigation }) {
       ListFooterComponent={Totals}
     />
   );
-  // console.log(items)
-  //   return(
-  //     <>
-  //     {getItemsCount()>0? <View style={styles.cartLineTotal}>
-
-  //     <Text style={[styles.lineLeft, styles.lineTotal]}>Total</Text>
-
-  //     <Text style={styles.mainTotal}>$ {total+" "}</Text>
-  // </View>: <View style={{marginLeft:"40%",marginVertical:"65%"}}>
-  //         <FontAwesome name='shopping-basket'  size={100} color={"#4c7cff"} />
-  //         <Text color={"#539165"} style={{marginLeft:15 ,fontWeight:"bold"}} >Cart is Empty</Text>
-
-  //         </View>}
-  //   </>
-  //  )
 }
 
 const styles = StyleSheet.create({
@@ -258,7 +225,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingVertical: 10,
     borderColor: "#eeeeee",
-    borderBottomColor: "#4c7cff",
+    borderBottomColor: "red",
     borderWidth: 3,
   },
   image: {
@@ -307,7 +274,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: "center",
-    backgroundColor: "#4c7cff",
+    backgroundColor: "red",
     marginRight: "-15%",
     marginLeft: "25%",
     marginTop: 4,
@@ -315,8 +282,7 @@ const styles = StyleSheet.create({
   },
   button2: {
     alignItems: "center",
-    backgroundColor: "#4c7cff",
-    //  marginRight:"-15%",
+    backgroundColor: "red",
   },
   delete: {
     alignItems: "center",

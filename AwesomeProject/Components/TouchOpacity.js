@@ -1,14 +1,18 @@
-import { Text, Image, TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 import React from "react";
 
-export default function TouchOpacity({ Src, onPress,borderColorr,backgroundColorr }) {
-  
+export default function TouchOpacity({
+  Src,
+  onPress,
+  borderColorr,
+  backgroundColorr,
+}) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
-      backgroundColor:backgroundColorr,
-        borderColor:borderColorr,
+        backgroundColor: backgroundColorr,
+        borderColor: borderColorr,
         borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 30,

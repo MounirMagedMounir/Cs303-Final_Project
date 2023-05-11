@@ -13,8 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 
-export default function Profile({ navigation }) {
-    const [activeTab, setActiveTab] = useState('Info');
+export default function Home({ navigation }) {
     const [UserData, SetUserData] = useState(null);
     const [isEnabled, setIsEnabled] = useState(false);
     const [name, setName] = useState(UserData?.name);
@@ -121,55 +120,41 @@ export default function Profile({ navigation }) {
 
 
 
-  const handleTabPress = (tabName) => {
-    setActiveTab(tabName);
-  };
+    return (
+        <>
+            <ImageBackground
+                style={{ flex: 1 }}
+                source={wp}>
+                <ScrollView>
+                    <KeyboardAvoidingView behavior="position">
+                        <ImageBackground
+                            style={{ flex: 1 }}
+                            source={back}>
 
-  return (
-   
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <View style={styles.profileImageContainer}>
-            <ProfileAvatar/>
-          </View>
-          <Text style={styles.profileName}>{name}</Text>
-        </View>
-        <View style={styles.tabBar}>
-          <TouchableOpacity
-            style={[styles.tabItem, activeTab === 'Info' && styles.activeTab]}
-            onPress={() => handleTabPress('Info')}
-          >
-            <Text style={styles.tabText}>Informations</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.tabItem, activeTab === 'Orders' && styles.activeTab]}
-            onPress={() => handleTabPress('Orders')}
-          >
-            <Text style={styles.tabText}>Orders</Text>
-          </TouchableOpacity>
-          
-        </View>
-      </View>
-      <View style={styles.tabContent}>
-        {activeTab === 'Info' && (
-          <View style={styles.profileContent}>
-            <Switch
+
+                            <View style={{ width: '30%', height: '15%', marginLeft: '36.5%', marginTop: '10%' }}>
+
+                                <ProfileAvatar />
+                            </View>
+                            <View>
+                                <Text style={{ fontSize: 20, marginLeft: 154, marginTop: 10 }}>{name}</Text>
+                                <Switch
                                     style={{
                                         transform: [{ scaleX: 1.2 }, { scaleY: 1.2 }],
-                                        marginRight: 170,
-                                        marginBottom: -20,
+                                        marginTop: 1,
+                                        marginRight: 185,
+                                        marginBottom: 100,
                                         marginLeft: 5,
                                     }}
                                     trackColor={{ false: "#767577", true: "#fff" }}
-                                    thumbColor={isEnabled ? "red" : "#f4f3f4"}
+                                    thumbColor={isEnabled ? "#3EC70B" : "#f4f3f4"}
                                     ios_backgroundColor="#3e3e3e"
                                     onValueChange={toggleSwitch}
                                     value={isEnabled}
                                 />
 
                                 <TextInput
-                                    style={styles.input0}
+                                    style={styles.input}
                                     placeholder="Name"
                                     value={name}
                                     onChangeText={(text) => setName(text)}
@@ -220,132 +205,43 @@ export default function Profile({ navigation }) {
                                 </TouchableOpacity>}
 
                             </View>
-          
-        )}
-        {activeTab === 'Orders' && (
-          <View style={styles.photosContent}>
-            
-            
-          </View>
-        )}
-      </View>
-    </View>
-  );
-};
+                        </ImageBackground>
+                    </KeyboardAvoidingView>
+                </ScrollView>
+            </ImageBackground>
+        </>
+    );
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f7f7f7',
-  },
-  header: {
-    backgroundColor: '#fff',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    paddingBottom: 30,
-  },
-  headerContent: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 60,
-  },
-  profileImageContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    overflow: 'hidden',
-    marginBottom: 10,
-  },
-  profileImage: {
-    width: '100%',
-    height: '100%',
-  },
-  profileName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 5,
-  },
-  profileBio: {
-    fontSize: 16,
-    color: '#777',
-    marginBottom: 20,
-  },
-  tabBar: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    paddingHorizontal: 20,
-  },
-  tabItem: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: 10,
-  },
-  tabText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#777',
-  },
-  activeTab: {
-    borderBottomColor: '#333',
-    borderBottomWidth: 2,
-  },
-  tabContent: {
-    flex: 1,
-    backgroundColor: '#fff',
-    marginTop: 20,
-    paddingHorizontal: 20,
-    paddingTop: 20,
-  },
-  profileContent: {},
-  profileTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  profileDescription: {
-    fontSize: 16,
-    color: '#777',
-    lineHeight: 24,
-    marginBottom: 20,
-  },
-  photosContent: {},
-  friendsContent: {},
-  
-input: {
-    width: '80%',
-    padding: '3.8%',
-    marginBottom: '3.85%',
-    textAlign: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 50,
-    borderColor: '#000',
-    borderWidth: 1,
-    marginLeft: '9.5%',
-    marginTop: '-1.3%',
-},input0: {
-    width: '80%',
-    padding: '3.8%',
-    marginBottom: '3.85%',
-    textAlign: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 50,
-    borderColor: '#000',
-    borderWidth: 1,
-    marginLeft: '9.5%',
-    marginTop: '10%',
-},
-buttonn: {
-    width: '80%',
-    backgroundColor: 'red',
-    padding: '3%',
-    borderRadius: 50,
-    marginTop: 0,
-    marginLeft: '9.5%',
-},
-buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-},
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    input: {
+        width: '60%',
+        padding: '3.8%',
+        marginBottom: '3.85%',
+        textAlign: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 50,
+        borderColor: '#000',
+        borderWidth: 1,
+        marginLeft: '18%',
+        marginTop: '-1.3%',
+    },
+    buttonn: {
+        width: '60%',
+        backgroundColor: 'red',
+        padding: '2.49%',
+        borderRadius: 50,
+        marginTop: 0,
+        marginLeft: '18%',
+    },
+    buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+    },
 });

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   TextInput,
-  Pressable,
   TouchableOpacity,
   FlatList,
   Text,
@@ -12,11 +11,8 @@ import {
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { Ionicons } from "@expo/vector-icons";
-import { Card, Avatar } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import Entypo from "react-native-vector-icons/Entypo";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const Search = () => {
   const navigation = useNavigation();
@@ -28,7 +24,7 @@ const Search = () => {
     try {
       const q = query(
         collection(db, "Products"),
-        where("name", "==", searchText)
+        where("name", ">=", searchText)
       );
       const querySnapshot = await getDocs(q);
 
@@ -59,7 +55,7 @@ const Search = () => {
 
   return (
     <View>
-      <View style={{ flexDirection: "row", marginLeft: 7 }}>
+      <View style={{ flexDirection: "row", marginLeft: 80 }}>
         <TextInput
           style={styles.input}
           placeholder="Search"
@@ -110,7 +106,7 @@ const Search = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50, // Add top padding for the close icon
+    paddingTop: 50,
   },
   input: {
     width: "75%",

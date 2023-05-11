@@ -17,11 +17,11 @@ export default function InputField({
   fieldButtonFunction,
   value,
   onChangeText,
-  style,variant
+  style,
+  variant,
 }) {
   return (
     <>
-   
       <View
         style={{
           flexDirection: "row",
@@ -33,7 +33,7 @@ export default function InputField({
             {fieldButtonLabel}
           </Text>
         </TouchableOpacity>
-        
+
         {inputType == "password" ? (
           <TextInput
             placeholder={label}
@@ -50,25 +50,24 @@ export default function InputField({
             style={styles.StyleInput}
             value={value}
             onChangeText={onChangeText}
-            
           />
         )}
 
-{icon}
+        {icon}
       </View>
     </>
   );
 }
 const styles = StyleSheet.create({
   StyleInput: {
-    width: '135%',
+    width: "135%",
     padding: 17,
     marginBottom: 13,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 50,
-    borderColor: 'red',
+    borderColor: "red",
     borderWidth: 1,
-    textAlign:'center',
-    marginLeft:-40,
+    textAlign: "center",
+    marginLeft: -40,
   },
 });
